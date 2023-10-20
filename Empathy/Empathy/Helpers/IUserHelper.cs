@@ -22,5 +22,13 @@ namespace Empathy.Helpers
         Task<SignInResult> LoginAsync(LoginViewModel model);
 
         Task LogoutAsync();
+
+        //CambioContraseña
+        Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
+
+        Task<IdentityResult> UpdateUserAsync(User user);
+
+        Task<User> GetUserAsync(Guid userId);
+
     }
 }
