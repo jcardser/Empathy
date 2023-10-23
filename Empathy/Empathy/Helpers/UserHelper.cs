@@ -87,17 +87,18 @@ namespace Empathy.Helpers
         {
             return await _context.Users
                 .Include(u => u.City)
+                .ThenInclude(c => c.State)
+                .ThenInclude(s => s.Country)
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<User> GetUserAsync(Guid userId)
         {
             return await _context.Users
-      .Include(u => u.City)
-      .ThenInclude(c => c.State)
-      .ThenInclude(s => s.Country)
-      .FirstOrDefaultAsync(u => u.Id == userId.ToString());
-
+                .Include(u => u.City)
+                .ThenInclude(c => c.State)
+                .ThenInclude(s => s.Country)
+                .FirstOrDefaultAsync(u => u.Id == userId.ToString());
         }
 
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)
@@ -108,7 +109,7 @@ namespace Empathy.Helpers
         public async Task<SignInResult> LoginAsync(LoginViewModel model)
         {
             //El false evita el bloquear un usuario por falla en los intentos
-            return await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+            return await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, true);
         }
 
         public async Task LogoutAsync()

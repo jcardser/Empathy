@@ -23,7 +23,7 @@ namespace Empathy.Helpers
 
         Task LogoutAsync();
 
-        //CambioContraseña
+        //CambioContraseña  
         Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
 
         Task<IdentityResult> UpdateUserAsync(User user);

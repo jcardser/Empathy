@@ -7,9 +7,9 @@ namespace Empathy.Data.Entities
     {
         public int Id { get; set; }
 
-        [Display(Name = "Departamento")]
-        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Display(Name = "Departamento / Estado")]
+        [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; }
 
         [JsonIgnore]
@@ -18,6 +18,6 @@ namespace Empathy.Data.Entities
         public ICollection<City> Cities { get; set; }
 
         [Display(Name = "Ciudades")]
-        public int CitiesNumbres => Cities == null ? 0 : Cities.Count;
+        public int CitiesNumber => Cities == null ? 0 : Cities.Count;
     }
 }

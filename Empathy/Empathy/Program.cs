@@ -1,7 +1,7 @@
 using Empathy.Data.Entities;
 using Empathy.Data;
 using Empathy.Helpers;
-using Empathy.Helpers;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +17,8 @@ builder.Services.AddDbContext<DataContext>(o =>
 
 builder.Services.AddIdentity<User, IdentityRole>(Ew =>
 {
+    Ew.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+    Ew.SignIn.RequireConfirmedEmail = true;
     Ew.User.RequireUniqueEmail = true; //E-mail Unico
     Ew.Password.RequireDigit = false;
     Ew.Password.RequiredUniqueChars = 0;
@@ -24,7 +26,13 @@ builder.Services.AddIdentity<User, IdentityRole>(Ew =>
     Ew.Password.RequireNonAlphanumeric = false;
     Ew.Password.RequireUppercase = false;
     Ew.Password.RequiredLength = 6;
-}).AddEntityFrameworkStores<DataContext>();
+    Ew.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    Ew.Lockout.MaxFailedAccessAttempts = 3;
+    Ew.Lockout.AllowedForNewUsers = true;
+
+})
+    .AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<DataContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

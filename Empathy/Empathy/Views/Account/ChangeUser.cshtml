@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+<flash dismissable="true" />
 <h2>Editar</h2>
 
 <h4>Usuario</h4>
@@ -37,7 +37,6 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#CountryId").change(function () {
-                debugger;
                 $("#StateId").empty();
                 $("#StateId").append('<option value="0">[Selecciona un Departamento / Estado...]</option>');
                 $("#CityId").empty();
@@ -71,7 +70,6 @@
                     data: { stateId: $("#StateId").val() },
                     success: function (cities) {
                         $.each(cities, function (i, city) {
-                            debugger;
                             $("#CityId").append('<option value="'
                                 + city.id + '">'
                                 + city.name + '</option>');
