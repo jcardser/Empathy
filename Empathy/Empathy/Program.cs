@@ -46,6 +46,8 @@ builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<IComboxHelper, ComboxHelper>();
 builder.Services.AddScoped<IBlobHelper, BlobHelper>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+builder.Services.AddScoped<IMailHelper, MailHelper>();
+
 
 var app = builder.Build();
 SeedData();

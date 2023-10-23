@@ -15,13 +15,15 @@ namespace Empathy.Controllers
         private readonly DataContext _context;
         private readonly IComboxHelper _comboxHelper;
         private readonly IBlobHelper _blobHelper;
+        private readonly IMailHelper _mailHelper;
 
-        public AccountController(IUserHelper userHelper, DataContext context, IComboxHelper comboxHelper, IBlobHelper blobHelper)
+        public AccountController(IUserHelper userHelper, DataContext context, IComboxHelper comboxHelper, IBlobHelper blobHelper, IMailHelper mailHelper)
         {
             _userHelper = userHelper;
             _context = context;
             _comboxHelper = comboxHelper;
             _blobHelper = blobHelper;
+            _mailHelper = mailHelper;
         }
 
         public IActionResult Login()
