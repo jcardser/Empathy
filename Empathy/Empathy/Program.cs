@@ -17,8 +17,6 @@ builder.Services.AddDbContext<DataContext>(o =>
 
 builder.Services.AddIdentity<User, IdentityRole>(Ew =>
 {
-    Ew.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
-    Ew.SignIn.RequireConfirmedEmail = true;
     Ew.User.RequireUniqueEmail = true; //E-mail Unico
     Ew.Password.RequireDigit = false;
     Ew.Password.RequiredUniqueChars = 0;
@@ -31,7 +29,6 @@ builder.Services.AddIdentity<User, IdentityRole>(Ew =>
     Ew.Lockout.AllowedForNewUsers = true;
 
 })
-    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<DataContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -46,7 +43,6 @@ builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<IComboxHelper, ComboxHelper>();
 builder.Services.AddScoped<IBlobHelper, BlobHelper>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
-builder.Services.AddScoped<IMailHelper, MailHelper>();
 
 
 var app = builder.Build();
