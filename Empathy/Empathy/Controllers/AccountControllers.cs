@@ -3,7 +3,6 @@ using Empathy.Data.Entities;
 using Empathy.Enums;
 using Empathy.Helpers;
 using Empathy.Models;
-using Empathy.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
