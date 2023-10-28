@@ -18,6 +18,8 @@ namespace Empathy.Data
     public DbSet<Country> Countries { get; set; }
     public DbSet<Sede> Sedes { get; set; }
     public DbSet<Procedure> Procedures { get; set; }
+    public DbSet<HealthCondition> HealthConditions { get; set; }
+    public DbSet<History> Histories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

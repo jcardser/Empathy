@@ -47,6 +47,20 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Procedures" asp-action="Index">Procedimientos</a>
                             </li>
                         }
+
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="HealthConditions" asp-action="Index">Condición de Salud</a>
+                            </li>
+                        }
+
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("UserProfessional"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Histories" asp-action="Index">Historia de salud</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if (User.Identity.IsAuthenticated)
