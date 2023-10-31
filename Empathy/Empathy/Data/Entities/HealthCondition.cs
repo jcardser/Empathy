@@ -6,6 +6,11 @@ namespace Empathy.Data.Entities
     {
         public int Id { get; set; }
 
+       
+        [Display(Name = "¿Eres casad@?")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public bool CivilStatus { get; set; }
+
         [Display(Name = "¿Se ha realizado alguna cirugía?")]
         [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]

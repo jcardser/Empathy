@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.VisualBasic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Empathy.Data.Entities
 {
@@ -6,8 +8,8 @@ namespace Empathy.Data.Entities
     {
         public int Id { get; set; }
 
+        [Column(TypeName = "datetime")]
         [Display(Name = "Fecha atención")]
-        [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public DateTime Date { get; set; }
 
