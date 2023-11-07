@@ -17,5 +17,9 @@ namespace Empathy.Data.Entities
         [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Summary { get; set; }
+
+
+        //Conexión con procedimientos//
+        public ICollection<Procedure> Procedures { get; set; }
     }
 }

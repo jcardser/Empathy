@@ -20,5 +20,11 @@ namespace Empathy.Data.Entities
         [MaxLength(10, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string PhoneCampus { get; set; }
+
+
+        //Conexión Base de datos Con Cita Médica//
+        public Appointment Appointment { get; set; }  
+        
+        public Category Category { get; set; }
     }
 }

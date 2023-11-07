@@ -47,5 +47,8 @@ namespace Empathy.Data.Entities
         [Display(Name = "¿Te has fracturado alguna vez?")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public bool Fracture { get; set; }
+
+        //Conexión a Cita Médica
+        public Appointment Appointment { get; set; }
     }
 }
