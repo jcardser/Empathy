@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Empathy.Data.Entities.Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConditionHistory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardiacHistory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PressureHistory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SugarHistory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Smoke)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Beer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fracture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConditionHistory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardiacHistory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PressureHistory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SugarHistory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Smoke)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Beer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fracture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

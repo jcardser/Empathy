@@ -79,5 +79,9 @@ namespace Empathy.Data.Entities
         public ICollection<Sede> Sedes { get; set; }
 
 
+        //Conexión con Tipo Categoría
+        public ICollection<Category> Categories { get; set; }   
+
+
     }
 }

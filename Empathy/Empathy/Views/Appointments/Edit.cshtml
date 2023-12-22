@@ -1,12 +1,12 @@
-﻿@model Empathy.Data.Entities.HealthCondition
+﻿@model Empathy.Data.Entities.Appointment
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Editar Registro</h1>
+<h1>Edit</h1>
 
-<h4>Condición de salud</h4>
+<h4>Appointment</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,19 +14,34 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Surgery" class="control-label"></label>
-                <input asp-for="Surgery" class="form-control" />
-                <span asp-validation-for="Surgery" class="text-danger"></span>
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Allergies" class="control-label"></label>
-                <input asp-for="Allergies" class="form-control" />
-                <span asp-validation-for="Allergies" class="text-danger"></span>
+                <label asp-for="Reason" class="control-label"></label>
+                <input asp-for="Reason" class="form-control" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EmergencyContact" class="control-label"></label>
-                <input asp-for="EmergencyContact" class="form-control" />
-                <span asp-validation-for="EmergencyContact" class="text-danger"></span>
+                <label asp-for="ConditionHistory" class="control-label"></label>
+                <input asp-for="ConditionHistory" class="form-control" />
+                <span asp-validation-for="ConditionHistory" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CardiacHistory" /> @Html.DisplayNameFor(model => model.CardiacHistory)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="PressureHistory" /> @Html.DisplayNameFor(model => model.PressureHistory)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SugarHistory" /> @Html.DisplayNameFor(model => model.SugarHistory)
+                </label>
             </div>
             <div class="form-group">
                 <label asp-for="Weight" class="control-label"></label>
@@ -53,6 +68,11 @@
                     <input class="form-check-input" asp-for="Fracture" /> @Html.DisplayNameFor(model => model.Fracture)
                 </label>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                </label>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -61,6 +81,6 @@
 </div>
 
 <div>
-    <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
