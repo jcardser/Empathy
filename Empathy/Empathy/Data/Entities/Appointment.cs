@@ -7,7 +7,7 @@ namespace Empathy.Data.Entities
     {
         public int Id { get; set; }
 
-        [Display(Name = "Seleccione una fecha disponible")]
+        [Display(Name = "Fecha Cita Medica")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime Date { get; set; }
@@ -27,7 +27,7 @@ namespace Empathy.Data.Entities
          * 4. Conmobilidades.
          */
 
-        [Display(Name ="Indicanos tus Alergias, Medicamentos que consumes, cirugias y/o conmorbilidades")]
+        [Display(Name ="Alergias, Medicamentos que consumes, cirugias y/o conmorbilidades")]
         [MaxLength(500, ErrorMessage ="El campo {0} debe tener máximo {1} carácteres")]
         [Required(ErrorMessage ="El campo {0} es obligatorio")]
         public string ConditionHistory { get; set; }
@@ -80,6 +80,7 @@ namespace Empathy.Data.Entities
 
 
         //Conexión con Tipo Categoría
+        
         public ICollection<Category> Categories { get; set; }   
 
 

@@ -7,19 +7,19 @@ namespace Empathy.Data
     public class DataContext : IdentityDbContext<User>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
-    {
+        {
 
-    }
+        }
 
-    public DbSet<Category> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
-    public DbSet<City> Cities { get; set; }
-    public DbSet<State> States { get; set; }
-    public DbSet<Country> Countries { get; set; }
-    public DbSet<Sede> Sedes { get; set; }
-    public DbSet<Procedure> Procedures { get; set; }
-    public DbSet<Appointment> Appointments{ get; set; }
-    public DbSet<History> Histories { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<State> States { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Sede> Sedes { get; set; }
+        public DbSet<Procedure> Procedures { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<History> Histories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

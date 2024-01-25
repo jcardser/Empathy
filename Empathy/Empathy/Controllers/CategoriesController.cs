@@ -3,6 +3,7 @@ using Empathy.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace Empathy.Controllers
 {
@@ -44,7 +45,7 @@ namespace Empathy.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe una categoria de cita con este nombre.");
+                        ModelState.AddModelError(string.Empty, "Categoría duplicada");
                     }
                     else
                     {
@@ -57,7 +58,6 @@ namespace Empathy.Controllers
                 }
             }
             return View(category);
-
         }
         // GET: Countries/Edit/5
         public async Task<IActionResult> Edit(int? id)
