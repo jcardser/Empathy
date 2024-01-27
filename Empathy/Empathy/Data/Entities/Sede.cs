@@ -23,8 +23,8 @@ namespace Empathy.Data.Entities
 
 
         //Conexión Base de datos Con Cita Médica//
-        public Appointment Appointment { get; set; }  
+        //public Appointment Appointment { get; set; }  
         
-        public Category Category { get; set; }
+        //public Category Category { get; set; }
     }
 }

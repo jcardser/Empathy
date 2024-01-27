@@ -12,7 +12,7 @@ namespace Empathy.Data.Entities
         public string Name { get; set; }
 
         //Conexión Con Sedes
-        public ICollection<Sede> Sedes { get; set; }
+        //public ICollection<Sede> Sedes { get; set; }
     }
 }
 

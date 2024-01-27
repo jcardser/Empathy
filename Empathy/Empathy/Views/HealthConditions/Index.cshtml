@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Empathy.Data.Entities.HealthCondition>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Inicio</h1>
+
+<p>
+    <a asp-action="Create">Crear nuevo registro</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ConditionHistory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medicine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surgery)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardiacHistory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fracture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sport)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Menstrual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MethodMenstrual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Smoke)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Beer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Occupation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConditionHistory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Medicine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surgery)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardiacHistory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fracture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sport)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Menstrual)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MethodMenstrual)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Smoke)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Beer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Occupation)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Editar</a>
+            </td>
+  
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a> 
+            </td>
+  
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

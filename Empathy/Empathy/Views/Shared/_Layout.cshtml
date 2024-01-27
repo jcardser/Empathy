@@ -50,6 +50,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Appointments" asp-action="Index">Citas Médicas</a>
                             </li>
+                            <!-- Espacio -->
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="HealthConditions" asp-action="Index">Condición de Salud</a>
+                            </li>
+                            <!-- Espacio -->
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Histories" asp-action="Index">Historia de salud</a>
+                            </li>
                         }
 
                         @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
@@ -57,6 +65,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="HealthConditions" asp-action="Index">Condición de Salud</a>
                             </li>
+
                         }
 
                         @if (User.Identity.IsAuthenticated && User.IsInRole("UserProfessional"))
@@ -88,6 +97,9 @@
             </div>
         </nav>
     </header>
+
+ 
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

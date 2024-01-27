@@ -23,64 +23,16 @@
                 <input asp-for="Reason" class="form-control" />
                 <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
+
+
             <div class="form-group">
-                <label asp-for="ConditionHistory" class="control-label"></label>
-                <input asp-for="ConditionHistory" class="form-control" />
-                <span asp-validation-for="ConditionHistory" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="CardiacHistory" /> @Html.DisplayNameFor(model => model.CardiacHistory)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="PressureHistory" /> @Html.DisplayNameFor(model => model.PressureHistory)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="SugarHistory" /> @Html.DisplayNameFor(model => model.SugarHistory)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Weight" class="control-label"></label>
-                <input asp-for="Weight" class="form-control" />
-                <span asp-validation-for="Weight" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Height" class="control-label"></label>
-                <input asp-for="Height" class="form-control" />
-                <span asp-validation-for="Height" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Smoke" /> @Html.DisplayNameFor(model => model.Smoke)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Beer" /> @Html.DisplayNameFor(model => model.Beer)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Fracture" /> @Html.DisplayNameFor(model => model.Fracture)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-outline-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
 </div>
 

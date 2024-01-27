@@ -35,6 +35,6 @@ namespace Empathy.Data.Entities
         
         //Debe organizarse el motivo de la consulta//
         //Conexión con procedimientos//
-        public ICollection<Procedure> Procedures { get; set; }
+        //public ICollection<Procedure> Procedures { get; set; }
     }
 }

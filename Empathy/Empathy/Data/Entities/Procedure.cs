@@ -13,7 +13,7 @@ namespace Empathy.Data.Entities
         public string TypeProcedure { get; set; }
 
         //Conexión con historia Clinica
-        public History History { get; set; }
+        //public History History { get; set; }
 
     }
 }

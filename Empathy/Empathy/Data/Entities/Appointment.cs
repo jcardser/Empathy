@@ -27,61 +27,22 @@ namespace Empathy.Data.Entities
          * 4. Conmobilidades.
          */
 
-        [Display(Name ="Alergias, Medicamentos que consumes, cirugias y/o conmorbilidades")]
-        [MaxLength(500, ErrorMessage ="El campo {0} debe tener máximo {1} carácteres")]
-        [Required(ErrorMessage ="El campo {0} es obligatorio")]
-        public string ConditionHistory { get; set; }
-
-        [Display(Name ="Antecedentes cardiacos familiares")]
-        [MaxLength(300, ErrorMessage ="El campo {1} debe tener máximo {1} carácteres")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public bool CardiacHistory {  get; set; }
-
-        [Display(Name = "Antecedentes presión arterial familiares")]
-        [MaxLength(300, ErrorMessage = "El campo {1} debe tener máximo {1} carácteres")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public bool PressureHistory { get; set; }
-
-        [Display(Name = "Antecedentes azúcar familiares")]
-        [MaxLength(300, ErrorMessage = "El campo {1} debe tener máximo {1} carácteres")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public bool SugarHistory { get; set; }
-
-        [Display(Name = "Indica tu peso (en kilogramos)")]
-        [MaxLength(10, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public string Weight { get; set; }
-
-        [Display(Name = "Indica tu estatura (en centímetros)")]
-        [MaxLength(10, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public string Height { get; set; }
-
-        [Display(Name = "¿Fumas?")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public bool Smoke { get; set; }
-
-        [Display(Name = "¿Consumes bebidas alcoholicas?")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public bool Beer { get; set; }
-
-        [Display(Name = "¿Te has fracturado alguna vez?")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public bool Fracture { get; set; }
+        //Pendiente asociar sede
+        //pendiete asociar profesional de salud
 
 
         //Estado de la cita lo actualiza el usuario. Funciona Como CRUD
 
-        [Display(Name = "Estado de la cita")]
-        public Boolean Status { get; set; }
+        //[Display(Name = "Estado de la cita")]
+        //public Boolean Status { get; set; }
 
         //Conexión con Sede//
-        public ICollection<Sede> Sedes { get; set; }
+        //public ICollection<Sede> Sedes { get; set; }
 
 
         //Conexión con Tipo Categoría
         
-        public ICollection<Category> Categories { get; set; }   
+        //public ICollection<Category> Categories { get; set; }   
 
 
     }
