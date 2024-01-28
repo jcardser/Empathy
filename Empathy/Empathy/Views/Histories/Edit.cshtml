@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Editar Historia Clínica</h1>
+<h1>Editar Historia Clinica</h1>
 
-<h4>Historia Clínica</h4>
+<h4>Historia Clinica</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,6 +24,46 @@
                 <span asp-validation-for="Summary" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Symptoms" class="control-label"></label>
+                <input asp-for="Symptoms" class="form-control" />
+                <span asp-validation-for="Symptoms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BloodPressure" class="control-label"></label>
+                <input asp-for="BloodPressure" class="form-control" />
+                <span asp-validation-for="BloodPressure" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HeartRate" class="control-label"></label>
+                <input asp-for="HeartRate" class="form-control" />
+                <span asp-validation-for="HeartRate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BreathingFrequency" class="control-label"></label>
+                <input asp-for="BreathingFrequency" class="form-control" />
+                <span asp-validation-for="BreathingFrequency" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Temperature" class="control-label"></label>
+                <input asp-for="Temperature" class="form-control" />
+                <span asp-validation-for="Temperature" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhysicalExam" class="control-label"></label>
+                <input asp-for="PhysicalExam" class="form-control" />
+                <span asp-validation-for="PhysicalExam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Diagnosis" class="control-label"></label>
+                <input asp-for="Diagnosis" class="form-control" />
+                <span asp-validation-for="Diagnosis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-outline-primary" />
             </div>
         </form>
@@ -31,6 +71,6 @@
 </div>
 
 <div>
-    <a asp-action="Index" class="btn btn-ouline-succes">Regresar</a>
+    <a asp-action="Index" claass="btn btn-outline-Suceess">Regresar</a>
 </div>
 

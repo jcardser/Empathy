@@ -78,5 +78,7 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Occupation { get; set; }
 
+        /* 
+         */
     }
 }

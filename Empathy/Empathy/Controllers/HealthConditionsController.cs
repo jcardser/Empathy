@@ -49,9 +49,7 @@ namespace Empathy.Controllers
             return View();
         }
 
-        // POST: HealthConditions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ConditionHistory,Medicine,Surgery,CardiacHistory,Weight,Height,Fracture,Sport,Menstrual,MethodMenstrual,Smoke,Beer,Occupation")] HealthCondition healthCondition)

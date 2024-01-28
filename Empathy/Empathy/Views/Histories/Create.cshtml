@@ -4,31 +4,105 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Registrar nueva Historia Clínica</h1>
+<h1>Crear nueva historia clinica</h1>
 
 <hr />
+<div class="container">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
+            </div>
+
+            <div class="col-md-4">
             <div class="form-group">
                 <label asp-for="Summary" class="control-label"></label>
                 <input asp-for="Summary" class="form-control" />
                 <span asp-validation-for="Summary" class="text-danger"></span>
             </div>
+            </div>
+
+            <div class="col-md-4">
             <div class="form-group">
+                <label asp-for="Symptoms" class="control-label"></label>
+                <input asp-for="Symptoms" class="form-control" />
+                <span asp-validation-for="Symptoms" class="text-danger"></span>
+            </div>
+            </div>
+
+            <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            </div>
+
+            <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="BloodPressure" class="control-label"></label>
+                <input asp-for="BloodPressure" class="form-control" />
+                <span asp-validation-for="BloodPressure" class="text-danger"></span>
+            </div>
+            </div>
+
+            <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="HeartRate" class="control-label"></label>
+                <input asp-for="HeartRate" class="form-control" />
+                <span asp-validation-for="HeartRate" class="text-danger"></span>
+            </div>
+            </div>
+
+            <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="BreathingFrequency" class="control-label"></label>
+                <input asp-for="BreathingFrequency" class="form-control" />
+                <span asp-validation-for="BreathingFrequency" class="text-danger"></span>
+            </div>
+            </div>
+
+            <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Temperature" class="control-label"></label>
+                <input asp-for="Temperature" class="form-control" />
+                <span asp-validation-for="Temperature" class="text-danger"></span>
+            </div>
+            </div>
+
+            <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="PhysicalExam" class="control-label"></label>
+                <input asp-for="PhysicalExam" class="form-control" />
+                <span asp-validation-for="PhysicalExam" class="text-danger"></span>
+            </div>
+            </div>
+
+            <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Diagnosis" class="control-label"></label>
+                <input asp-for="Diagnosis" class="form-control" />
+                <span asp-validation-for="Diagnosis" class="text-danger"></span>
+            </div>
+            </div>
+
+            <br />
+
+            <div class="form-group mt-2">
                 <input type="submit" value="Create" class="btn btn-outline-primary" />
             </div>
         </form>
     </div>
 </div>
 
+<br />
 <div>
-    <a asp-action="Index" class="btn btn-oultine-success">Regresar</a>
+    <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
 </div>
 

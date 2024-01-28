@@ -49,33 +49,17 @@ namespace Empathy.Controllers
             return View();
         }
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(History history)
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Add(history);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException dbUpdateException)
-                {
-                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                    {
-                        ModelState.AddModelError(string.Empty, "Ya existe una categoria de cita con este nombre.");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    ModelState.AddModelError(string.Empty, exception.Message);
-                }
+                _context.Add(history);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             return View(history);
         }
@@ -101,7 +85,7 @@ namespace Empathy.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Summary")] History history)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Summary,Symptoms,Notes,BloodPressure,HeartRate,BreathingFrequency,Temperature,PhysicalExam,Diagnosis")] History history)
         {
             if (id != history.Id)
             {
