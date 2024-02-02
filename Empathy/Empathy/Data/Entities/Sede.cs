@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Empathy.Data.Entities
 {
@@ -21,10 +22,10 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string PhoneCampus { get; set; }
 
+        public ICollection<SedeAppointment> SedeAppointments { get; set; }
+        //[Display(Name = "# Cita")]
+        public int SedeNumber => SedeAppointments == null ? 0 : SedeAppointments.Count();
 
-        //Conexión Base de datos Con Cita Médica//
-        //public Appointment Appointment { get; set; }  
-        
-        //public Category Category { get; set; }
+
     }
 }

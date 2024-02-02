@@ -12,19 +12,30 @@ namespace Empathy.Helpers
         {
             _context = context;
         }
-        public async Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync()
-        {
-            List<SelectListItem> List = await _context.Categories.Select(c => new SelectListItem
-            {
-                Text = c.Name,
-                Value = c.Id.ToString(),
-            }).OrderBy(c => c.Text)
-                .ToListAsync();
-            List.Insert(0, new SelectListItem { Text = "[Seleccione una Categoía...", Value = "0" });
 
+        public async Task<IEnumerable<SelectListItem>> GetComboCampusAsync()
+        {
+            List<SelectListItem> List = await _context.Sedes.Select(s => new SelectListItem
+            {
+                Text = s.NameCampus,
+                Value = s.Id.ToString(),
+            }).OrderBy(s => s.Text)
+            .ToListAsync();
+            List.Insert(0, new SelectListItem { Text = "[Seleccione una sede...", Value = "0" });
             return List;
         }
 
+        public async Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync()
+        {
+            List<SelectListItem> List = await _context.Sedes.Select(s => new SelectListItem
+            {
+                Text = s.NameCampus,
+                Value = s.Id.ToString(),
+            }).OrderBy(s => s.Text)
+            .ToListAsync();
+            List.Insert(0, new SelectListItem { Text = "[Seleccione una sede...", Value = "0" });
+            return List;
+        }
         public async Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId)
         {
             List<SelectListItem> list = await _context.Cities
@@ -53,7 +64,6 @@ namespace Empathy.Helpers
             list.Insert(0, new SelectListItem { Text = "[Seleccione un país...", Value = "0" });
             return list;
         }
-
         public async Task<IEnumerable<SelectListItem>> GetComboStatesAsync(int countryId)
         {
             List<SelectListItem> list = await _context.States

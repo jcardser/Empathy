@@ -1,0 +1,7 @@
+﻿@model Empathy.Models.AddAppointmentViewModel
+
+<div class="form-group">
+    <label asp-for="SedeId" class="control-label"></label>
+    <select asp-for="SedeId" asp-items="Model.Sedes" class=" form-control" />
+    <span asp-validation-for="SedeId" class="text-danger"></span>
+</div>

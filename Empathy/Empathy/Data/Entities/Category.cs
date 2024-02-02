@@ -11,8 +11,9 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Name { get; set; }
 
+
         //Conexión Con Sedes
-        //public ICollection<Sede> Sedes { get; set; }
+        public ICollection<Sede> Sedes { get; set; }
     }
 }
 

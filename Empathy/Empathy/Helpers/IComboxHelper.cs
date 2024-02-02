@@ -12,5 +12,8 @@ namespace Empathy.Helpers
 
         Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId);
 
+        Task<IEnumerable<SelectListItem>> GetComboCampusAsync();
+
+
     }
 }

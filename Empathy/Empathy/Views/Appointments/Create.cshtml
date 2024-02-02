@@ -1,7 +1,8 @@
-﻿@model Empathy.Data.Entities.Appointment
+﻿@model Empathy.Models.AddAppointmentViewModel
 
 @{
     ViewData["Title"] = "Create";
+    
 }
 
 <h1>Agendar cita médica</h1>
@@ -22,6 +23,13 @@
                 <input asp-for="Reason" class="form-control" />
                 <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="SedeId" class="control-label"></label>
+                <select asp-for="SedeId" asp-items="Model.Sedes" class=" form-control" />
+                <span asp-validation-for="SedeId" class="text-danger"></span>
+            </div>
+      
 
 
 

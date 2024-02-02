@@ -7,24 +7,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Empathy.Data;
 using Empathy.Data.Entities;
+using Empathy.Helpers;
+using Empathy.Models;
+using Empathy.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Empathy.Controllers
 {
+    //[Authorize(Roles ="Admin")]
     public class AppointmentsController : Controller
     {
         private readonly DataContext _context;
+        private readonly IComboxHelper _comboxHelper;
 
-        public AppointmentsController(DataContext context)
+        public AppointmentsController(DataContext context, IComboxHelper comboxHelper)
         {
             _context = context;
+            _comboxHelper = comboxHelper;
         }
 
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-              return _context.Appointments != null ? 
-                          View(await _context.Appointments.ToListAsync()) :
-                          Problem("Entity set 'DataContext.Appointments'  is null.");
+              return View(await _context.Appointments
+                  .Include(a => a.SedesAppointments)
+                  .ThenInclude(sa => sa.Sede)
+                  .ToListAsync());
         }
 
         // GET: Appointments/Details/5
@@ -46,18 +54,38 @@ namespace Empathy.Controllers
         }
 
         // GET: Appointments/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            AddAppointmentViewModel model = new()
+            {
+            Sedes = await _comboxHelper.GetComboCampusAsync(),
+            };
+
+            return View(model);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,Reason,ConditionHistory,CardiacHistory,PressureHistory,SugarHistory,Weight,Height,Smoke,Beer,Fracture,Status")] Appointment appointment)
+        public async Task<IActionResult> Create(AddAppointmentViewModel model)
         {
             if (ModelState.IsValid)
             {
+                Appointment appointment = new()
+                {
+                    Date = model.Date,
+                    Reason = model.Reason,
+                };
+
+                appointment.SedesAppointments = new List<SedeAppointment>()
+                {
+                    new SedeAppointment
+                    {
+                        Sede = await _context.Sedes.FindAsync(model.SedeId)
+                    }
+                };
+
+
                 try
                 {
                     _context.Add(appointment);
@@ -80,7 +108,8 @@ namespace Empathy.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
-            return View(appointment);
+            model.Sedes = await _comboxHelper.GetComboCampusAsync();
+            return View(model);
         }
 
         // GET: Appointments/Edit/5
@@ -99,9 +128,6 @@ namespace Empathy.Controllers
             return View(appointment);
         }
 
-        // POST: Appointments/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Reason,ConditionHistory,CardiacHistory,PressureHistory,SugarHistory,Weight,Height,Smoke,Beer,Fracture,Status")] Appointment appointment)
