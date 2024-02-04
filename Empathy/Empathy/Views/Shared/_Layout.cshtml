@@ -58,7 +58,11 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Histories" asp-action="Index">Historia de salud</a>
                             </li>
-                        }
+                            <!-- Espacio -->
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Professionals" asp-action="Index">Profesionales</a>
+                            </li>
+                       }
 
                         @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
                         {

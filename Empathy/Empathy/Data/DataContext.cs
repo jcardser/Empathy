@@ -23,6 +23,11 @@ namespace Empathy.Data
         public DbSet<HealthCondition> HealthConditions { get; set; }
 
         public DbSet<SedeAppointment>SedesAppointmets { get; set; }
+
+        public DbSet<Professional>Professionals { get; set; }
+       
+        public DbSet<SedeProfessional>SedeProfessionals { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -33,10 +38,8 @@ namespace Empathy.Data
             modelBuilder.Entity<State>().HasIndex("Name", "CountryId").IsUnique();
             modelBuilder.Entity<City>().HasIndex("Name", "StateId").IsUnique();
             modelBuilder.Entity<Appointment>().HasIndex(a => a.Id).IsUnique();
-
-
-
-
+            modelBuilder.Entity<Professional>().HasIndex(p => p.Id).IsUnique();
+            modelBuilder.Entity<SedeProfessional>().HasIndex("SedeId", "ProfessionalId").IsUnique();
         }
 }
 

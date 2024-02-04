@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Empathy.Data.Entities;
+using Empathy.Migrations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Empathy.Helpers
 {
@@ -13,6 +15,8 @@ namespace Empathy.Helpers
         Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId);
 
         Task<IEnumerable<SelectListItem>> GetComboCampusAsync();
+
+        Task<IEnumerable<SelectListItem>> GetComboProfessional();
 
 
     }
