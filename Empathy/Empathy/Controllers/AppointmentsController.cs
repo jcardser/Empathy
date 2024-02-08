@@ -30,8 +30,7 @@ namespace Empathy.Controllers
         public async Task<IActionResult> Index()
         {
               return View(await _context.Appointments
-                  .Include(a => a.SedesAppointments)
-                  .ThenInclude(sa => sa.Sede)
+                  .Include(sa => sa.Sedes)
                   .ToListAsync());
         }
 
@@ -56,9 +55,14 @@ namespace Empathy.Controllers
         // GET: Appointments/Create
         public async Task<IActionResult> Create()
         {
-            AddAppointmentViewModel model = new()
+            var sedes = await _context.Sedes.ToListAsync(); // Obtener todas las sedes
+            var model = new AddAppointmentViewModel
             {
-            Sedes = await _comboxHelper.GetComboCampusAsync(),
+                Sedes = sedes.Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.NameCampus
+                })
             };
 
             return View(model);
@@ -75,40 +79,15 @@ namespace Empathy.Controllers
                 {
                     Date = model.Date,
                     Reason = model.Reason,
+                    Sedes = new List<Sede> { await _context.Sedes.FindAsync(model.SedeId) }
                 };
 
-                appointment.SedesAppointments = new List<SedeAppointment>()
-                {
-                    new SedeAppointment
-                    {
-                        Sede = await _context.Sedes.FindAsync(model.SedeId)
-                    }
-                };
+                _context.Add(appointment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
 
-
-                try
-                {
-                    _context.Add(appointment);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException dbUpdateException)
-                {
-                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                    {
-                        ModelState.AddModelError(string.Empty, "Ya existe una categoria de cita con este nombre.");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    ModelState.AddModelError(string.Empty, exception.Message);
-                }
             }
-            model.Sedes = await _comboxHelper.GetComboCampusAsync();
+            //model.Sedes = await _comboxHelper.GetComboCampusAsync();
             return View(model);
         }
 

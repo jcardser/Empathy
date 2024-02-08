@@ -21,13 +21,9 @@ namespace Empathy.Data.Entities
 
         /*Conexión con las otras entidades, Foreing Key
          */
-        public ICollection<SedeAppointment> SedesAppointments { get; set; }
-        public int SedesNumber => SedesAppointments == null ? 0 : SedesAppointments.Count;
-        //[Display(Name = "Sedes")]
-        
-        //[Display(Name = "Sede / Campus")]
-        //public int SedesNumber => Sedes == null ? 0 : Sedes.Count;
 
-
+        public ICollection<Sede> Sedes { get; set; }
+        //public ICollection<SedeAppointment> SedesAppointments { get; set; }
+        //public int SedesNumber => SedesAppointments == null ? 0 : SedesAppointments.Count;
     }
 }
