@@ -6,11 +6,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Empathy.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialProyect : Migration
+    public partial class InitialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -52,6 +66,80 @@ namespace Empathy.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HealthConditions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConditionHistory = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Medicine = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Surgery = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    CardiacHistory = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Weight = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Height = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Fracture = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sport = table.Column<bool>(type: "bit", nullable: false),
+                    Menstrual = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    MethodMenstrual = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Smoke = table.Column<bool>(type: "bit", nullable: false),
+                    Beer = table.Column<bool>(type: "bit", nullable: false),
+                    Occupation = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HealthConditions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Histories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Summary = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Symptoms = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    BloodPressure = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    HeartRate = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    BreathingFrequency = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Temperature = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    PhysicalExam = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Diagnosis = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Histories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Procedures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TypeProcedure = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Procedures", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Professionals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameProfessional = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Specialty = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Professionals", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -73,13 +161,32 @@ namespace Empathy.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sedes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameCampus = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sedes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sedes_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "States",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    CountryId = table.Column<int>(type: "int", nullable: false)
+                    CountryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,8 +195,55 @@ namespace Empathy.Migrations
                         name: "FK_States_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SedeProfessionals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SedeId = table.Column<int>(type: "int", nullable: true),
+                    ProfessionalId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SedeProfessionals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SedeProfessionals_Professionals_ProfessionalId",
+                        column: x => x.ProfessionalId,
+                        principalTable: "Professionals",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SedeProfessionals_Sedes_SedeId",
+                        column: x => x.SedeId,
+                        principalTable: "Sedes",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SedesAppointmets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AppointmentId = table.Column<int>(type: "int", nullable: true),
+                    SedeId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SedesAppointmets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SedesAppointmets_Appointments_AppointmentId",
+                        column: x => x.AppointmentId,
+                        principalTable: "Appointments",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SedesAppointmets_Sedes_SedeId",
+                        column: x => x.SedeId,
+                        principalTable: "Sedes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -99,7 +253,7 @@ namespace Empathy.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    StateId = table.Column<int>(type: "int", nullable: false)
+                    StateId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -108,8 +262,7 @@ namespace Empathy.Migrations
                         name: "FK_Cities_States_StateId",
                         column: x => x.StateId,
                         principalTable: "States",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -120,7 +273,7 @@ namespace Empathy.Migrations
                     Document = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: false),
+                    CityId = table.Column<int>(type: "int", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserType = table.Column<int>(type: "int", nullable: false),
@@ -146,8 +299,7 @@ namespace Empathy.Migrations
                         name: "FK_AspNetUsers_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -236,6 +388,12 @@ namespace Empathy.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Appointments_Id",
+                table: "Appointments",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -289,7 +447,8 @@ namespace Empathy.Migrations
                 name: "IX_Cities_Name_StateId",
                 table: "Cities",
                 columns: new[] { "Name", "StateId" },
-                unique: true);
+                unique: true,
+                filter: "[StateId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_StateId",
@@ -303,6 +462,51 @@ namespace Empathy.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Procedures_TypeProcedure",
+                table: "Procedures",
+                column: "TypeProcedure",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Professionals_Id",
+                table: "Professionals",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SedeProfessionals_ProfessionalId",
+                table: "SedeProfessionals",
+                column: "ProfessionalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SedeProfessionals_SedeId_ProfessionalId",
+                table: "SedeProfessionals",
+                columns: new[] { "SedeId", "ProfessionalId" },
+                unique: true,
+                filter: "[SedeId] IS NOT NULL AND [ProfessionalId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sedes_CategoryId",
+                table: "Sedes",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sedes_NameCampus",
+                table: "Sedes",
+                column: "NameCampus",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SedesAppointmets_AppointmentId",
+                table: "SedesAppointmets",
+                column: "AppointmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SedesAppointmets_SedeId",
+                table: "SedesAppointmets",
+                column: "SedeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_States_CountryId",
                 table: "States",
                 column: "CountryId");
@@ -311,7 +515,8 @@ namespace Empathy.Migrations
                 name: "IX_States_Name_CountryId",
                 table: "States",
                 columns: new[] { "Name", "CountryId" },
-                unique: true);
+                unique: true,
+                filter: "[CountryId] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -333,7 +538,19 @@ namespace Empathy.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "HealthConditions");
+
+            migrationBuilder.DropTable(
+                name: "Histories");
+
+            migrationBuilder.DropTable(
+                name: "Procedures");
+
+            migrationBuilder.DropTable(
+                name: "SedeProfessionals");
+
+            migrationBuilder.DropTable(
+                name: "SedesAppointmets");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -342,7 +559,19 @@ namespace Empathy.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Professionals");
+
+            migrationBuilder.DropTable(
+                name: "Appointments");
+
+            migrationBuilder.DropTable(
+                name: "Sedes");
+
+            migrationBuilder.DropTable(
                 name: "Cities");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "States");

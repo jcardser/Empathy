@@ -39,7 +39,7 @@ namespace Empathy.Data
             modelBuilder.Entity<City>().HasIndex("Name", "StateId").IsUnique();
             modelBuilder.Entity<Appointment>().HasIndex(a => a.Id).IsUnique();
             modelBuilder.Entity<Professional>().HasIndex(p => p.Id).IsUnique();
-            modelBuilder.Entity<SedeProfessional>().HasIndex("SedeId", "ProfessionalId").IsUnique();
+            //modelBuilder.Entity<SedeProfessional>().HasIndex("SedeId", "ProfessionalId").IsUnique();
         }
 }
 

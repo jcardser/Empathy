@@ -1,5 +1,5 @@
 ﻿using Empathy.Data.Entities;
-using Empathy.Migrations;
+
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Empathy.Helpers

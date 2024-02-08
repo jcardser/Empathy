@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Empathy.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231222020304_AddAppointmentEntity")]
-    partial class AddAppointmentEntity
+    [Migration("20240206031917_InitialDb")]
+    partial class InitialDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "7.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -33,52 +33,13 @@ namespace Empathy.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Beer")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CardiacHistory")
-                        .HasMaxLength(300)
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ConditionHistory")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("Fracture")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Height")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<bool>("PressureHistory")
-                        .HasMaxLength(300)
-                        .HasColumnType("bit");
 
                     b.Property<string>("Reason")
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
-
-                    b.Property<bool>("Smoke")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("SugarHistory")
-                        .HasMaxLength(300)
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Weight")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 
@@ -96,17 +57,12 @@ namespace Empathy.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AppointmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppointmentId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -127,7 +83,7 @@ namespace Empathy.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("StateId")
+                    b.Property<int?>("StateId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -135,7 +91,8 @@ namespace Empathy.Migrations
                     b.HasIndex("StateId");
 
                     b.HasIndex("Name", "StateId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[StateId] IS NOT NULL");
 
                     b.ToTable("Cities");
                 });
@@ -161,6 +118,73 @@ namespace Empathy.Migrations
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("Empathy.Data.Entities.HealthCondition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Beer")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CardiacHistory")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("ConditionHistory")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Fracture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Height")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Medicine")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Menstrual")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("MethodMenstrual")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Occupation")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("Smoke")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Sport")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Surgery")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Weight")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HealthConditions");
+                });
+
             modelBuilder.Entity("Empathy.Data.Entities.History", b =>
                 {
                     b.Property<int>("Id")
@@ -169,10 +193,25 @@ namespace Empathy.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BloodPressure")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("BreathingFrequency")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime");
 
                     b.Property<string>("Diagnosis")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("HeartRate")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -192,6 +231,16 @@ namespace Empathy.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("Symptoms")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Temperature")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Histories");
@@ -205,9 +254,6 @@ namespace Empathy.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("HistoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("TypeProcedure")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -215,12 +261,36 @@ namespace Empathy.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HistoryId");
-
                     b.HasIndex("TypeProcedure")
                         .IsUnique();
 
                     b.ToTable("Procedures");
+                });
+
+            modelBuilder.Entity("Empathy.Data.Entities.Professional", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameProfessional")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Specialty")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.ToTable("Professionals");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.Sede", b =>
@@ -231,15 +301,7 @@ namespace Empathy.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AddressCampus")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
-                    b.Property<int>("AppointmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("NameCampus")
@@ -247,14 +309,7 @@ namespace Empathy.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("PhoneCampus")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AppointmentId");
 
                     b.HasIndex("CategoryId");
 
@@ -262,6 +317,54 @@ namespace Empathy.Migrations
                         .IsUnique();
 
                     b.ToTable("Sedes");
+                });
+
+            modelBuilder.Entity("Empathy.Data.Entities.SedeAppointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SedeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("SedeId");
+
+                    b.ToTable("SedesAppointmets");
+                });
+
+            modelBuilder.Entity("Empathy.Data.Entities.SedeProfessional", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ProfessionalId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SedeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.HasIndex("SedeId", "ProfessionalId")
+                        .IsUnique()
+                        .HasFilter("[SedeId] IS NOT NULL AND [ProfessionalId] IS NOT NULL");
+
+                    b.ToTable("SedeProfessionals");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.State", b =>
@@ -272,7 +375,7 @@ namespace Empathy.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CountryId")
+                    b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -285,7 +388,8 @@ namespace Empathy.Migrations
                     b.HasIndex("CountryId");
 
                     b.HasIndex("Name", "CountryId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CountryId] IS NOT NULL");
 
                     b.ToTable("States");
                 });
@@ -303,7 +407,7 @@ namespace Empathy.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("CityId")
+                    b.Property<int?>("CityId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -519,61 +623,57 @@ namespace Empathy.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Empathy.Data.Entities.Category", b =>
-                {
-                    b.HasOne("Empathy.Data.Entities.Appointment", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("AppointmentId");
-                });
-
             modelBuilder.Entity("Empathy.Data.Entities.City", b =>
                 {
                     b.HasOne("Empathy.Data.Entities.State", "State")
                         .WithMany("Cities")
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StateId");
 
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("Empathy.Data.Entities.Procedure", b =>
-                {
-                    b.HasOne("Empathy.Data.Entities.History", "History")
-                        .WithMany("Procedures")
-                        .HasForeignKey("HistoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("History");
-                });
-
             modelBuilder.Entity("Empathy.Data.Entities.Sede", b =>
                 {
-                    b.HasOne("Empathy.Data.Entities.Appointment", "Appointment")
+                    b.HasOne("Empathy.Data.Entities.Category", null)
                         .WithMany("Sedes")
-                        .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
+                });
 
-                    b.HasOne("Empathy.Data.Entities.Category", "Category")
-                        .WithMany("Sedes")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("Empathy.Data.Entities.SedeAppointment", b =>
+                {
+                    b.HasOne("Empathy.Data.Entities.Appointment", "Appointment")
+                        .WithMany("SedesAppointments")
+                        .HasForeignKey("AppointmentId");
+
+                    b.HasOne("Empathy.Data.Entities.Sede", "Sede")
+                        .WithMany("SedeAppointments")
+                        .HasForeignKey("SedeId");
 
                     b.Navigation("Appointment");
 
-                    b.Navigation("Category");
+                    b.Navigation("Sede");
+                });
+
+            modelBuilder.Entity("Empathy.Data.Entities.SedeProfessional", b =>
+                {
+                    b.HasOne("Empathy.Data.Entities.Professional", "Professional")
+                        .WithMany("SedeProfessionals")
+                        .HasForeignKey("ProfessionalId");
+
+                    b.HasOne("Empathy.Data.Entities.Sede", "Sede")
+                        .WithMany("SedeProfessionals")
+                        .HasForeignKey("SedeId");
+
+                    b.Navigation("Professional");
+
+                    b.Navigation("Sede");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.State", b =>
                 {
                     b.HasOne("Empathy.Data.Entities.Country", "Country")
                         .WithMany("States")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });
@@ -582,9 +682,7 @@ namespace Empathy.Migrations
                 {
                     b.HasOne("Empathy.Data.Entities.City", "City")
                         .WithMany("Users")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CityId");
 
                     b.Navigation("City");
                 });
@@ -642,9 +740,7 @@ namespace Empathy.Migrations
 
             modelBuilder.Entity("Empathy.Data.Entities.Appointment", b =>
                 {
-                    b.Navigation("Categories");
-
-                    b.Navigation("Sedes");
+                    b.Navigation("SedesAppointments");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.Category", b =>
@@ -662,9 +758,16 @@ namespace Empathy.Migrations
                     b.Navigation("States");
                 });
 
-            modelBuilder.Entity("Empathy.Data.Entities.History", b =>
+            modelBuilder.Entity("Empathy.Data.Entities.Professional", b =>
                 {
-                    b.Navigation("Procedures");
+                    b.Navigation("SedeProfessionals");
+                });
+
+            modelBuilder.Entity("Empathy.Data.Entities.Sede", b =>
+                {
+                    b.Navigation("SedeAppointments");
+
+                    b.Navigation("SedeProfessionals");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.State", b =>

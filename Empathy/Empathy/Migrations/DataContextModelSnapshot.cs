@@ -264,7 +264,7 @@ namespace Empathy.Migrations
                     b.ToTable("Procedures");
                 });
 
-            modelBuilder.Entity("Empathy.Data.Entities.Professionals", b =>
+            modelBuilder.Entity("Empathy.Data.Entities.Professional", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -287,7 +287,7 @@ namespace Empathy.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Professional");
+                    b.ToTable("Professionals");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.Sede", b =>
@@ -298,11 +298,6 @@ namespace Empathy.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AddressCampus")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
@@ -310,11 +305,6 @@ namespace Empathy.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PhoneCampus")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 
@@ -347,6 +337,31 @@ namespace Empathy.Migrations
                     b.HasIndex("SedeId");
 
                     b.ToTable("SedesAppointmets");
+                });
+
+            modelBuilder.Entity("Empathy.Data.Entities.SedeProfessional", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ProfessionalId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SedeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessionalId");
+
+                    b.HasIndex("SedeId", "ProfessionalId")
+                        .IsUnique()
+                        .HasFilter("[SedeId] IS NOT NULL AND [ProfessionalId] IS NOT NULL");
+
+                    b.ToTable("SedeProfessionals");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.State", b =>
@@ -605,21 +620,6 @@ namespace Empathy.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ProfessionalsSede", b =>
-                {
-                    b.Property<int>("ProfessionalsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SedeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProfessionalsId", "SedeId");
-
-                    b.HasIndex("SedeId");
-
-                    b.ToTable("ProfessionalsSede");
-                });
-
             modelBuilder.Entity("Empathy.Data.Entities.City", b =>
                 {
                     b.HasOne("Empathy.Data.Entities.State", "State")
@@ -647,6 +647,21 @@ namespace Empathy.Migrations
                         .HasForeignKey("SedeId");
 
                     b.Navigation("Appointment");
+
+                    b.Navigation("Sede");
+                });
+
+            modelBuilder.Entity("Empathy.Data.Entities.SedeProfessional", b =>
+                {
+                    b.HasOne("Empathy.Data.Entities.Professional", "Professional")
+                        .WithMany("SedeProfessionals")
+                        .HasForeignKey("ProfessionalId");
+
+                    b.HasOne("Empathy.Data.Entities.Sede", "Sede")
+                        .WithMany("SedeProfessionals")
+                        .HasForeignKey("SedeId");
+
+                    b.Navigation("Professional");
 
                     b.Navigation("Sede");
                 });
@@ -720,21 +735,6 @@ namespace Empathy.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProfessionalsSede", b =>
-                {
-                    b.HasOne("Empathy.Data.Entities.Professionals", null)
-                        .WithMany()
-                        .HasForeignKey("ProfessionalsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Empathy.Data.Entities.Sede", null)
-                        .WithMany()
-                        .HasForeignKey("SedeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Empathy.Data.Entities.Appointment", b =>
                 {
                     b.Navigation("SedesAppointments");
@@ -755,9 +755,16 @@ namespace Empathy.Migrations
                     b.Navigation("States");
                 });
 
+            modelBuilder.Entity("Empathy.Data.Entities.Professional", b =>
+                {
+                    b.Navigation("SedeProfessionals");
+                });
+
             modelBuilder.Entity("Empathy.Data.Entities.Sede", b =>
                 {
                     b.Navigation("SedeAppointments");
+
+                    b.Navigation("SedeProfessionals");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.State", b =>

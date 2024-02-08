@@ -16,8 +16,9 @@ namespace Empathy.Data.Entities
         [MaxLength(30, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
         public string Specialty { get; set; }
 
-        public ICollection<SedeProfessional> SedeProfessionals { get; set; }
-        public int SedeNumbers => SedeProfessionals == null ? 0 : SedeProfessionals.Count();
+        public ICollection<Sede> Sedes { get; set; }
+        //public ICollection<SedeProfessional> SedeProfessionals { get; set; }
+        //public int SedeNumbers => SedeProfessionals == null ? 0 : SedeProfessionals.Count();
 
     }
 }

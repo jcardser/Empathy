@@ -8,8 +8,8 @@ namespace Empathy.Models
         [Display(Name = "Sede")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una Sede.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public int CategoryId { get; set; }
+        public int SedeId { get; set; }
 
-        public IEnumerable<SelectListItem> Categories { get; set; }
+        public IEnumerable<SelectListItem> Sedes { get; set; }
     }
 }

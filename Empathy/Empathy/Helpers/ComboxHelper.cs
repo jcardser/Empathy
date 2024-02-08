@@ -7,14 +7,17 @@ namespace Empathy.Helpers
     public class ComboxHelper : IComboxHelper
     {
         private readonly DataContext _context;
+        private readonly ILogger<ComboxHelper> _logger;
 
-        public ComboxHelper(DataContext context)
+        public ComboxHelper(DataContext context, ILogger<ComboxHelper> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<SelectListItem>> GetComboCampusAsync()
         {
+            _logger.LogInformation("Obteniendo lista de sedes...");
             List<SelectListItem> list = await _context.Sedes.Select(s => new SelectListItem
             {
                 Text = s.NameCampus,
@@ -22,6 +25,7 @@ namespace Empathy.Helpers
             })
             .OrderBy(s => s.Text)
             .ToListAsync();
+            _logger.LogInformation($"Se encontraron {list.Count} sedes.");
             list.Insert(0, new SelectListItem { Text = "[Seleccione una sede...", Value = "0" });
             return list;
         }

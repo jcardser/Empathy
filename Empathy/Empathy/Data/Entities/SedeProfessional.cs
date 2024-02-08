@@ -6,6 +6,6 @@
 
         public Sede Sede { get; set; }
         public Professional Professional { get; set; }
-        public Category Category { get; set; }  
+
     }
 }

@@ -27,8 +27,7 @@ namespace Empathy.Controllers
         public async Task<IActionResult> Index()
         {
               return View(await _context.Professionals
-                  .Include(p => p.SedeProfessionals)
-                  .ThenInclude(ps => ps.Sede)
+                  .Include(ps => ps.Sedes)
                   .ToListAsync());
         }
 
@@ -50,13 +49,18 @@ namespace Empathy.Controllers
             return View(professional);
         }
 
-        // GET: Professionals/Create
         public async Task<IActionResult> Create()
         {
-            CreateProfessionalViewModel model = new()
+            var sedes = await _context.Sedes.ToListAsync(); // Obtener todas las sedes
+            var model = new CreateProfessionalViewModel
             {
-                Categories = await _comboxHelper.GetComboCategoriesAsync(),
+                Sedes = sedes.Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.NameCampus
+                })
             };
+
             return View(model);
         }
 
@@ -66,45 +70,20 @@ namespace Empathy.Controllers
         {
             if (ModelState.IsValid)
             {
-                Professional professional = new()
+                var professional = new Professional
                 {
                     NameProfessional = model.NameProfessional,
                     Specialty = model.Specialty,
+                    Sedes = new List<Sede> { await _context.Sedes.FindAsync(model.SedeId) }
                 };
 
-                professional.SedeProfessionals = new List<SedeProfessional>()
-                {
-                    new SedeProfessional
-                    {
-                        Category = await _context.Categories.FindAsync(model.CategoryId)
-                    }
-                };
-                try
-                {
-                    _context.Add(professional);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException dbUpdateException)
-                {
-                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                    {
-                        ModelState.AddModelError(string.Empty, "Ya existe un profesional con el mismo nombre.");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    ModelState.AddModelError(string.Empty, exception.Message);
-                }
+                _context.Add(professional);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
             }
 
-            model.Categories = await _comboxHelper.GetComboCategoriesAsync();
             return View(model);
-
         }
 
         // GET: Professionals/Edit/5
