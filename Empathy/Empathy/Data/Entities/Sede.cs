@@ -12,6 +12,16 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string NameCampus { get; set; }
 
+        [Display(Name = "Dirección de sede")]
+        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public string Address { get; set; }
+
+        [Display(Name = "Telefóno de Sede")]
+        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public string PhtoneCampus { get; set; }
+
         //Conexión con Cita médica
         public ICollection<SedeAppointment> SedeAppointments { get; set; }
         [Display(Name = "# Sedes")]

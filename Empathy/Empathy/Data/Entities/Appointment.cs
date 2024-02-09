@@ -23,7 +23,6 @@ namespace Empathy.Data.Entities
          */
 
         public ICollection<Sede> Sedes { get; set; }
-        //public ICollection<SedeAppointment> SedesAppointments { get; set; }
-        //public int SedesNumber => SedesAppointments == null ? 0 : SedesAppointments.Count;
+
     }
 }

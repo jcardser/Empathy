@@ -21,7 +21,9 @@ namespace Empathy.Data
             await _context.Database.EnsureCreatedAsync();
             await CheckCategoriesAsync();
             await CheckCountriesAsync();
+            await CheckCampusAsync();
             await CheckRolesAsync();
+            await CheckProceduresAsync();
             await CheckUserAsync("1067950681", "Juan Sebastian", "Cardona Serna", "jcardser@yopmail.com", "304 414 3038", "Villa hermosa", UserType.Admin);
             await CheckUserAsync("1230099", "ProPruebas", "professional", "propuebas@yopmail.com", "304 414 3038", "Villa hermosa", UserType.UserProfessional);
             await CheckUserAsync("1152713905", "Laura Valentina", "Lopera Londoño", "lvalel@yopmail.com", "301 388 74 94", "Manrique", UserType.User);
@@ -148,6 +150,28 @@ namespace Empathy.Data
             }
         }
 
+        private async Task CheckCampusAsync()
+        {
+            if (!_context.Sedes.Any())
+            {
+                _context.Sedes.Add(new Sede { NameCampus = "Centro", Address=" Cra 45 #50-50", PhtoneCampus="3004305050" });
+                _context.Sedes.Add(new Sede { NameCampus = "Sur", Address = " Cra 60 sur #12-03", PhtoneCampus = "3204502020" });
+                _context.Sedes.Add(new Sede { NameCampus = "Norte", Address = " Avenida 3 Norte #10-24", PhtoneCampus = "344143038" });
+                _context.Sedes.Add(new Sede { NameCampus = "Occidente", Address = " Circunvalar 80 # 45-150", PhtoneCampus = "3013887494" });
+                await _context.SaveChangesAsync();
+            }
+        }
 
+        private async Task CheckProceduresAsync()
+        {
+            if (!_context.Procedures.Any())
+            {
+                _context.Procedures.Add(new Procedure { TypeProcedure = "Examen Hemograma"});
+                _context.Procedures.Add(new Procedure { TypeProcedure = "Radiografia"});
+                _context.Procedures.Add(new Procedure { TypeProcedure = "Cirugia"});
+                _context.Procedures.Add(new Procedure { TypeProcedure = "Inyectología"});
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
