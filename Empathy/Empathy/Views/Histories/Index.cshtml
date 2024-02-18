@@ -53,6 +53,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Diagnosis)
             </th>
+                            <th>
+                                Procedimiento sugerido
+                            </th>
             <th></th>
         </tr>
     </thead>
@@ -89,6 +92,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Diagnosis)
             </td>
+
+                                <td>
+                                    @if (item.Procedures != null && item.Procedures.Any())
+                                    {
+                                        foreach (var procedure in item.Procedures)
+                                        {
+                                            <span>@procedure.TypeProcedure</span>
+
+                                            <br />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>No se ha asignado un procedimiento</span>
+                                    }
+                                </td>
             <td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Editar</a> 

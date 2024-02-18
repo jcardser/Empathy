@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Create";
-    
 }
 
 <h1>Agendar cita médica</h1>
@@ -11,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
@@ -25,13 +24,16 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="SedeId" class="control-label"></label>
-                <select asp-for="SedeId" asp-items="Model.Sedes" class="form-control"></select>
-                <span asp-validation-for="SedeId" class="text-danger"></span>
+                <label asp-for="SelectedProfessionalId" class="control-label">Profesional</label>
+                <select asp-for="SelectedProfessionalId" asp-items="@Model.ProfessionalOptions" class="form-control"></select>
+                <span asp-validation-for="SelectedProfessionalId" class="text-danger"></span>
             </div>
-      
 
-
+            <div class="form-group">
+                <label asp-for="SelectedSedeId" class="control-label">Sede</label>
+                <select asp-for="SelectedSedeId" asp-items="@Model.SedeOptions" class="form-control"></select>
+                <span asp-validation-for="SelectedSedeId" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-outline-primary" />
@@ -43,4 +45,3 @@
 <div>
     <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
 </div>
-

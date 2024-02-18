@@ -2,15 +2,14 @@
 
 namespace Empathy.Data.Entities
 {
-    public class SedeProfessional
+    public class AppointmentProfessional
     {
-        [Key]
+        //[Key]
         public int Id { get; set; }
-        public int SedeId { get; set; }
-        public Sede Sede { get; set; }
+        public int AppointmentId { get; set; }
+        public Appointment Appointment { get; set; }
 
         public int ProfessionalId { get; set; }
         public Professional Professional { get; set; }
-
     }
 }

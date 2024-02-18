@@ -27,10 +27,7 @@ namespace Empathy.Data.Entities
         [Display(Name = "# Sedes")]
         public int SedeNumber => SedeAppointments == null ? 0 : SedeAppointments.Count();
 
-        //Conexión con Cita médica
-        //public ICollection<SedeProfessional> SedeProfessionals{ get; set; }
-        //[Display(Name = "# Profesionales")]
-        //public int SedeNumbers => SedeProfessionals == null ? 0 : SedeProfessionals.Count();
+        public ICollection<SedeProfessional>SedeProfessionals { get; set; }
 
 
     }

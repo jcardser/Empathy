@@ -4,8 +4,6 @@
     ViewData["Title"] = "Index";
 }
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-
 <p>
     <a asp-action="Create" class="btn btn-outline-primary">Agendar Cita</a>
 </p>
@@ -18,18 +16,21 @@
             </div>
             <div class="panel-body">
                 <table class="table table-hover table-responsive table-striped" id="MyTable">
-
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Date)
+                                Fecha
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Reason)
+                                Motivo
+                            </th>
+                            <th>
+                                Profesional
                             </th>
                             <th>
                                 Sede
                             </th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,14 +44,24 @@
                                     @Html.DisplayFor(modelItem => item.Reason)
                                 </td>
                                 <td>
-                                    @if (item.Sedes != null && item.Sedes.Any())
+                                    @if (item.AppointmentProfessionals != null && item.AppointmentProfessionals.Any())
                                     {
-                                        foreach (var sede in item.Sedes)
-                                        {
-                                            <span>@sede.NameCampus</span>
-
-                                            <br />
-                                        }
+                                        <ul>
+                                            @foreach (var appointmentProfessional in item.AppointmentProfessionals)
+                                            {
+                                                <li>@appointmentProfessional.Professional.NameProfessional - @appointmentProfessional.Professional.Specialty</li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <span>No se ha asignado un profesional</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Sede != null)
+                                    {
+                                        <span>@item.Sede.NameCampus</span>
                                     }
                                     else
                                     {
@@ -91,4 +102,3 @@
         });
     </script>
 }
-

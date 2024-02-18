@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Empathy.Data;
 using Empathy.Data.Entities;
+using Empathy.Models;
 
 namespace Empathy.Controllers
 {
@@ -22,7 +23,9 @@ namespace Empathy.Controllers
         // GET: Histories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Histories.ToListAsync());
+            return View(await _context.Histories
+                .Include(h=>h.Procedures)
+                .ToListAsync());
         }
 
         // GET: Histories/Details/5
@@ -44,24 +47,66 @@ namespace Empathy.Controllers
         }
 
         // GET: Histories/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var procedures = await _context.Procedures.ToListAsync();
+            var model = new CreateHistoryViewModel
+            {
+                Procedures = procedures.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.TypeProcedure
+                })
+            };
+
+            return View(model);
         }
 
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(History history)
+        public async Task<IActionResult> Create(CreateHistoryViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var history = new History
+                {
+                    Date = model.Date,
+                    Summary = model.Summary,
+                    Symptoms = model.Symptoms,
+                    Notes = model.Notes,
+                    BloodPressure = model.BloodPressure,
+                    HeartRate = model.HeartRate,
+                    BreathingFrequency = model.BreathingFrequency,
+                    Temperature = model.Temperature,
+                    PhysicalExam = model.PhysicalExam,
+                    Diagnosis = model.Diagnosis
+                };
+
+                // Obtener el procedimiento seleccionado
+                var selectedProcedure = await _context.Procedures.FindAsync(model.ProcedureId);
+                if (selectedProcedure != null)
+                {
+                    // Agregar el procedimiento a la historia
+                    history.Procedures = new List<Procedure> { selectedProcedure };
+                }
+
                 _context.Add(history);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(history);
+
+            // Si llegamos aquí, algo falló, devolver la vista con los datos del modelo
+            var procedures = await _context.Procedures.ToListAsync();
+            model.Procedures = procedures.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.TypeProcedure
+            });
+
+            return View(model);
         }
 
         // GET: Histories/Edit/5

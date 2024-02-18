@@ -4,6 +4,7 @@ using Empathy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Empathy.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240210221124_AppointmentUnionUser")]
+    partial class AppointmentUnionUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,29 +70,6 @@ namespace Empathy.Migrations
                         .IsUnique();
 
                     b.ToTable("Appointments");
-                });
-
-            modelBuilder.Entity("Empathy.Data.Entities.AppointmentProfessional", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AppointmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProfessionalId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppointmentId");
-
-                    b.HasIndex("ProfessionalId");
-
-                    b.ToTable("AppointmentProfessionals");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.Category", b =>
@@ -410,10 +390,10 @@ namespace Empathy.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ProfessionalId")
+                    b.Property<int?>("ProfessionalId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SedeId")
+                    b.Property<int?>("SedeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -713,25 +693,6 @@ namespace Empathy.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Empathy.Data.Entities.AppointmentProfessional", b =>
-                {
-                    b.HasOne("Empathy.Data.Entities.Appointment", "Appointment")
-                        .WithMany("AppointmentProfessionals")
-                        .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Empathy.Data.Entities.Professional", "Professional")
-                        .WithMany()
-                        .HasForeignKey("ProfessionalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Appointment");
-
-                    b.Navigation("Professional");
-                });
-
             modelBuilder.Entity("Empathy.Data.Entities.City", b =>
                 {
                     b.HasOne("Empathy.Data.Entities.State", "State")
@@ -774,16 +735,12 @@ namespace Empathy.Migrations
             modelBuilder.Entity("Empathy.Data.Entities.SedeProfessional", b =>
                 {
                     b.HasOne("Empathy.Data.Entities.Professional", "Professional")
-                        .WithMany("SedesProfessionals")
-                        .HasForeignKey("ProfessionalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ProfessionalId");
 
                     b.HasOne("Empathy.Data.Entities.Sede", "Sede")
-                        .WithMany("SedeProfessionals")
-                        .HasForeignKey("SedeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("SedeId");
 
                     b.Navigation("Professional");
 
@@ -876,8 +833,6 @@ namespace Empathy.Migrations
 
             modelBuilder.Entity("Empathy.Data.Entities.Appointment", b =>
                 {
-                    b.Navigation("AppointmentProfessionals");
-
                     b.Navigation("AppointmentUsers");
 
                     b.Navigation("Sedes");
@@ -901,15 +856,11 @@ namespace Empathy.Migrations
             modelBuilder.Entity("Empathy.Data.Entities.Professional", b =>
                 {
                     b.Navigation("Sedes");
-
-                    b.Navigation("SedesProfessionals");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.Sede", b =>
                 {
                     b.Navigation("SedeAppointments");
-
-                    b.Navigation("SedeProfessionals");
                 });
 
             modelBuilder.Entity("Empathy.Data.Entities.State", b =>

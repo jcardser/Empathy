@@ -27,13 +27,15 @@ namespace Empathy.Data
         public DbSet<Professional>Professionals { get; set; }
        
         public DbSet<SedeProfessional>SedeProfessionals { get; set; }
+        public DbSet<AppointmentUser>AppointmentUsers { get; set; }
+        public DbSet<AppointmentProfessional> AppointmentProfessionals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
-            modelBuilder.Entity<Sede>().HasIndex(c => c.NameCampus).IsUnique();
-            modelBuilder.Entity<Procedure>().HasIndex(c => c.TypeProcedure).IsUnique();
+            //modelBuilder.Entity<Sede>().HasIndex(c => c.NameCampus).IsUnique();
+            //modelBuilder.Entity<Procedure>().HasIndex(c => c.TypeProcedure).IsUnique();
             modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<State>().HasIndex("Name", "CountryId").IsUnique();
             modelBuilder.Entity<City>().HasIndex("Name", "StateId").IsUnique();

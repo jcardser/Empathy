@@ -22,7 +22,12 @@ namespace Empathy.Data.Entities
         /*Conexión con las otras entidades, Foreing Key
          */
 
-        public ICollection<Sede> Sedes { get; set; }
+        public int SedeId { get; set; }
+        public Sede Sede { get; set; }
 
+        public ICollection<AppointmentProfessional> AppointmentProfessionals { get; set; }
+
+        [JsonIgnore]
+        public ICollection<AppointmentUser> AppointmentUsers { get; set; }
     }
 }

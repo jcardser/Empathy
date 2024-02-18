@@ -29,9 +29,13 @@ namespace Empathy.Controllers
         // GET: Appointments
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Appointments
-                  .Include(sa => sa.Sedes)
-                  .ToListAsync());
+            var appointments = await _context.Appointments
+                .Include(a => a.AppointmentProfessionals)
+                    .ThenInclude(ap => ap.Professional)
+                .Include(a => a.Sede)
+                .ToListAsync();
+
+            return View(appointments);
         }
 
         // GET: Appointments/Details/5
@@ -55,56 +59,115 @@ namespace Empathy.Controllers
         // GET: Appointments/Create
         public async Task<IActionResult> Create()
         {
-            var sedes = await _context.Sedes.ToListAsync(); // Obtener todas las sedes
+            var professionals = await _context.Professionals.ToListAsync();
+            var sedes = await _context.Sedes.ToListAsync();
+
             var model = new AddAppointmentViewModel
             {
-                Sedes = sedes.Select(s => new SelectListItem
+                ProfessionalOptions = professionals.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = $"{p.NameProfessional} - {p.Specialty}"
+                }),
+                // Asignar opciones de sede al modelo
+                SedeOptions = sedes.Select(s => new SelectListItem
                 {
                     Value = s.Id.ToString(),
-                    Text = s.NameCampus
+                    Text = $"{s.NameCampus} - {s.Address}"
                 })
             };
 
             return View(model);
         }
 
-
+        // POST: Appointments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddAppointmentViewModel model)
         {
             if (ModelState.IsValid)
             {
-                Appointment appointment = new()
+                var professional = await _context.Professionals.FindAsync(model.SelectedProfessionalId);
+                var sede = await _context.Sedes.FindAsync(model.SelectedSedeId);
+
+                if (professional == null || sede == null)
+                {
+                    // Manejar el caso donde el profesional o la sede no se encuentran
+                    return NotFound();
+                }
+
+                var appointment = new Appointment
                 {
                     Date = model.Date,
                     Reason = model.Reason,
-                    Sedes = new List<Sede> { await _context.Sedes.FindAsync(model.SedeId) }
+                    SedeId = sede.Id
                 };
+
+                appointment.AppointmentProfessionals = new List<AppointmentProfessional>
+        {
+            new AppointmentProfessional
+            {
+                ProfessionalId = professional.Id
+            }
+        };
 
                 _context.Add(appointment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-
             }
-            //model.Sedes = await _comboxHelper.GetComboCampusAsync();
+
+            // En caso de que el modelo no sea válido, recargar las opciones para profesionales y sede
+            var professionals = await _context.Professionals.ToListAsync();
+            var sedes = await _context.Sedes.ToListAsync();
+
+            model.ProfessionalOptions = professionals.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = $"{p.NameProfessional} - {p.Specialty}"
+            });
+
+            // Asignar opciones de sede al modelo
+            model.SedeOptions = sedes.Select(s => new SelectListItem
+            {
+                Value = s.Id.ToString(),
+                Text = $"{s.NameCampus} - {s.Address}"
+            });
+
             return View(model);
         }
 
         // GET: Appointments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Appointments == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var appointment = await _context.Appointments.FindAsync(id);
+            var appointment = await _context.Appointments
+                .Include(a => a.AppointmentProfessionals)
+                    .ThenInclude(ap => ap.Professional)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (appointment == null)
             {
                 return NotFound();
             }
-            return View(appointment);
+
+            // Cargar los profesionales para la vista
+            var professionals = await _context.Professionals.ToListAsync();
+            var model = new EditAppointmentViewModel
+            {
+                Id = appointment.Id,
+                Date = appointment.Date,
+                Reason = appointment.Reason,
+                ProfessionalOptions = professionals.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = $"{p.NameProfessional} - {p.Specialty}"
+                })
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -171,14 +234,14 @@ namespace Empathy.Controllers
             {
                 _context.Appointments.Remove(appointment);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AppointmentExists(int id)
         {
-          return (_context.Appointments?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Appointments?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

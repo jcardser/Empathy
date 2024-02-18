@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Empathy.Models
 {
@@ -17,5 +20,8 @@ namespace Empathy.Models
         [MaxLength(300, ErrorMessage = "El campo {0} debe tener máximo {1} carácteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Reason { get; set; }
+
+        // Agrega esta propiedad para mostrar las opciones de profesionales en la vista
+        public IEnumerable<SelectListItem> ProfessionalOptions { get; set; }
     }
 }

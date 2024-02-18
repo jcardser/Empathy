@@ -1,6 +1,7 @@
 ﻿using Empathy.Enums;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Empathy.Data.Entities
 {
@@ -46,5 +47,8 @@ namespace Empathy.Data.Entities
 
         [Display(Name = "Usuario")]
         public string FullNameWithDocument => $"{FirstName} {LastName} - {Document}";
+
+        [JsonIgnore]
+        public ICollection<AppointmentUser> AppointmentUsers { get; set; }
     }
 }

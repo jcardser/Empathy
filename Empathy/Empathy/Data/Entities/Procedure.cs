@@ -12,8 +12,6 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string TypeProcedure { get; set; }
 
-        //Conexión con historia Clinica
-        //public History History { get; set; }
-
+        public ICollection<History> Histories { get; set; }
     }
 }

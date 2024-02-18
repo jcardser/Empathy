@@ -24,6 +24,7 @@ namespace Empathy.Data
             await CheckCampusAsync();
             await CheckRolesAsync();
             await CheckProceduresAsync();
+ 
             await CheckUserAsync("1067950681", "Juan Sebastian", "Cardona Serna", "jcardser@yopmail.com", "304 414 3038", "Villa hermosa", UserType.Admin);
             await CheckUserAsync("1230099", "ProPruebas", "professional", "propuebas@yopmail.com", "304 414 3038", "Villa hermosa", UserType.UserProfessional);
             await CheckUserAsync("1152713905", "Laura Valentina", "Lopera Londoño", "lvalel@yopmail.com", "301 388 74 94", "Manrique", UserType.User);
@@ -173,5 +174,8 @@ namespace Empathy.Data
                 await _context.SaveChangesAsync();
             }
         }
+
+      
+        
     }
 }
