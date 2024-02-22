@@ -1,34 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace Empathy.Data.Entities
 {
-    public class Sede
+    public class Campus
     {
         public int Id { get; set; }
 
         [Display(Name = "Nombre del campus")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public string NameCampus { get; set; }
+        public string NameCam { get; set; }
 
         [Display(Name = "Dirección de sede")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public string Address { get; set; }
+        public string AddressCam { get; set; }
 
         [Display(Name = "Telefóno de Sede")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public string PhtoneCampus { get; set; }
+        public string PhoneCam { get; set; }
 
-        //Conexión con Cita médica
-        public ICollection<SedeAppointment> SedeAppointments { get; set; }
-        [Display(Name = "# Sedes")]
-        public int SedeNumber => SedeAppointments == null ? 0 : SedeAppointments.Count();
+        public ICollection<Doctor> Doctors { get; set; }
 
-        public ICollection<SedeProfessional>SedeProfessionals { get; set; }
-
-
+        [Display(Name = "Médico")]
+        public int DoctorsNumber => Doctors == null ? 0 : Doctors.Count;
     }
 }

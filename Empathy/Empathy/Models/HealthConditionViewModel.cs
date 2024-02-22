@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-namespace Empathy.Data.Entities
+namespace Empathy.Models
 {
-    public class HealthCondition
+    public class HealthConditionViewModel
     {
         public int Id { get; set; }
 
@@ -79,10 +78,7 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Occupation { get; set; }
 
-        /* 
-         */
+        public int AppointmentId { get; set; }
 
-        [JsonIgnore]
-        public Appointment Appointment { get; set; }
     }
 }

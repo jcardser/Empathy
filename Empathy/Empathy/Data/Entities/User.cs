@@ -48,7 +48,6 @@ namespace Empathy.Data.Entities
         [Display(Name = "Usuario")]
         public string FullNameWithDocument => $"{FirstName} {LastName} - {Document}";
 
-        [JsonIgnore]
-        public ICollection<AppointmentUser> AppointmentUsers { get; set; }
+
     }
 }

@@ -1,16 +1,16 @@
-﻿@model Empathy.Models.AddAppointmentViewModel
+﻿@model Empathy.Data.Entities.Appointment
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Agendar cita médica</h1>
+<h1>Create</h1>
 
-<h4>Cita médica</h4>
+<h4>Appointment</h4>
 <hr />
 <div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create" method="post">
+    <div class="col-md-4">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
@@ -22,26 +22,14 @@
                 <input asp-for="Reason" class="form-control" />
                 <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label asp-for="SelectedProfessionalId" class="control-label">Profesional</label>
-                <select asp-for="SelectedProfessionalId" asp-items="@Model.ProfessionalOptions" class="form-control"></select>
-                <span asp-validation-for="SelectedProfessionalId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="SelectedSedeId" class="control-label">Sede</label>
-                <select asp-for="SelectedSedeId" asp-items="@Model.SedeOptions" class="form-control"></select>
-                <span asp-validation-for="SelectedSedeId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-outline-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+    <a asp-action="Index">Back to List</a>
 </div>
+

@@ -1,27 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Empathy.Data.Entities
 {
-    public class Professional
+    public class Doctor
     {
         public int Id { get; set; }
 
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(30, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
-        public string NameProfessional { get; set; }
+        public string NameDoctor { get; set; }
 
         [Display(Name = "Especialidad")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(30, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]
-        public string Specialty { get; set; }
+        public string SpecialtyDoc { get; set; }
 
-     
-        public ICollection<Sede> Sedes { get; set; }
-
-        public ICollection<SedeProfessional> SedesProfessionals { get;}
-        //public ICollection<SedeProfessional> SedeProfessionals { get; set; }
-        //public int SedeNumbers => SedeProfessionals == null ? 0 : SedeProfessionals.Count();
-
+        [JsonIgnore]
+        public Campus Campus { get; set; }
     }
 }

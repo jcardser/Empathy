@@ -19,12 +19,9 @@ namespace Empathy.Data
         {
             //Crea  la BD y aplica las migraciones
             await _context.Database.EnsureCreatedAsync();
-            await CheckCategoriesAsync();
             await CheckCountriesAsync();
-            await CheckCampusAsync();
             await CheckRolesAsync();
             await CheckProceduresAsync();
- 
             await CheckUserAsync("1067950681", "Juan Sebastian", "Cardona Serna", "jcardser@yopmail.com", "304 414 3038", "Villa hermosa", UserType.Admin);
             await CheckUserAsync("1230099", "ProPruebas", "professional", "propuebas@yopmail.com", "304 414 3038", "Villa hermosa", UserType.UserProfessional);
             await CheckUserAsync("1152713905", "Laura Valentina", "Lopera Londoño", "lvalel@yopmail.com", "301 388 74 94", "Manrique", UserType.User);
@@ -139,29 +136,8 @@ namespace Empathy.Data
         }
 
 
-        private async Task CheckCategoriesAsync()
-        {
-            if (!_context.Categories.Any())
-            {
-                _context.Categories.Add(new Category { Name = "Cardiología" });
-                _context.Categories.Add(new Category { Name = "Reumatología" });
-                _context.Categories.Add(new Category { Name = "Psiquiatría" });
-                _context.Categories.Add(new Category { Name = "Medicina del dolor" });
-                await _context.SaveChangesAsync();
-            }
-        }
 
-        private async Task CheckCampusAsync()
-        {
-            if (!_context.Sedes.Any())
-            {
-                _context.Sedes.Add(new Sede { NameCampus = "Centro", Address=" Cra 45 #50-50", PhtoneCampus="3004305050" });
-                _context.Sedes.Add(new Sede { NameCampus = "Sur", Address = " Cra 60 sur #12-03", PhtoneCampus = "3204502020" });
-                _context.Sedes.Add(new Sede { NameCampus = "Norte", Address = " Avenida 3 Norte #10-24", PhtoneCampus = "344143038" });
-                _context.Sedes.Add(new Sede { NameCampus = "Occidente", Address = " Circunvalar 80 # 45-150", PhtoneCampus = "3013887494" });
-                await _context.SaveChangesAsync();
-            }
-        }
+
 
         private async Task CheckProceduresAsync()
         {

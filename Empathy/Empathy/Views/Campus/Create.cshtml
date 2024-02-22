@@ -1,0 +1,40 @@
+﻿@model Empathy.Data.Entities.Campus
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Campus</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NameCam" class="control-label"></label>
+                <input asp-for="NameCam" class="form-control" />
+                <span asp-validation-for="NameCam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressCam" class="control-label"></label>
+                <input asp-for="AddressCam" class="form-control" />
+                <span asp-validation-for="AddressCam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneCam" class="control-label"></label>
+                <input asp-for="PhoneCam" class="form-control" />
+                <span asp-validation-for="PhoneCam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

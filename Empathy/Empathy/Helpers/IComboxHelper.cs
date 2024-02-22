@@ -6,7 +6,6 @@ namespace Empathy.Helpers
 {
     public interface IComboxHelper
     {
-        Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync();
 
         Task<IEnumerable<SelectListItem>> GetComboCountriesAsync();
 
@@ -14,9 +13,9 @@ namespace Empathy.Helpers
 
         Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId);
 
-        Task<IEnumerable<SelectListItem>> GetComboCampusAsync();
+        //Task<IEnumerable<SelectListItem>> GetComboCampusAsync();
 
-        Task<IEnumerable<SelectListItem>> GetComboProfessional();
+        //Task<IEnumerable<SelectListItem>> GetComboProfessional();
 
 
     }

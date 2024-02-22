@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Empathy.Data.Entities.Appointment>
+﻿@model IEnumerable<Empathy.Data.Entities.Campus>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                @Html.DisplayNameFor(model => model.NameCam)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Reason)
+                @Html.DisplayNameFor(model => model.AddressCam)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HealsthConditionsNumber)
+                @Html.DisplayNameFor(model => model.PhoneCam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorsNumber)
             </th>
             <th></th>
         </tr>
@@ -28,13 +31,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                @Html.DisplayFor(modelItem => item.NameCam)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Reason)
+                @Html.DisplayFor(modelItem => item.AddressCam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneCam)
             </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.HealsthConditionsNumber)
+                    @Html.DisplayFor(modelItem => item.DoctorsNumber)
                 </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
