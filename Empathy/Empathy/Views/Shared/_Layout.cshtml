@@ -30,10 +30,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Countries" asp-action="Index">Paises</a>
                             </li>
-                            <!-- Espacio -->
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categoria de citas</a>
-                            </li>
+
                             <!-- Espacio -->
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
@@ -50,18 +47,13 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Appointments" asp-action="Index">Citas Médicas</a>
                             </li>
-                            <!-- Espacio -->
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="HealthConditions" asp-action="Index">Condición de Salud</a>
-                            </li>
+                         
                             <!-- Espacio -->
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Histories" asp-action="Index">Historia de salud</a>
                             </li>
                             <!-- Espacio -->
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Professionals" asp-action="Index">Profesionales</a>
-                            </li>
+                          
                        }
 
                         @if (User.Identity.IsAuthenticated && User.IsInRole("User"))

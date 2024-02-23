@@ -4,31 +4,150 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+
+<h1>Detalles</h1>
+
 <div>
-    <a asp-action="AddHealthCondition" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Agregar Doctor</a>
+    <partial name="_AppointmentDetails" />
+</div>
+
+<div>
+    <a asp-action="AddHealthCondition" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Agregar Condición de salud</a>
     <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Editar </a>
     <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
 </div>
-<div>
-    <h4>Appointment</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Reason)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Reason)
-        </dd>
-    </dl>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Condiciones de salud</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-responsive table-striped" id="MyTable">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().ConditionHistory)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().Medicine)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().Surgery)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().CardiacHistory)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().Weight)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().Height)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().Fracture)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().Sport)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().Menstrual)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().MethodMenstrual)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().Smoke)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().Beer)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HealthConditions.FirstOrDefault().Occupation)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.HealthConditions)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ConditionHistory)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Medicine)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Surgery)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CardiacHistory)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Weight)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Height)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Fracture)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Sport)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Menstrual)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MethodMenstrual)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Smoke)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Beer)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Occupation)
+                                </td>
+
+                                <td>
+                                    <a asp-action="EditHealthCondition" asp-route-id="@item.Id" class="btn btn-outline-primary">Editar</a> |
+                                    <a asp-action="DetailsHealthCondition" asp-route-id="@item.Id" class="btn btn-outline-info">Detalle</a> |
+                                    <a asp-action="DeleteHealthCondition" asp-route-id="@item.Id" class="btn btn-outline-danger">Borrar</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [5, 25, 50, 100, 200, -1],
+                    [5, 25, 50, 100, 200, "Todos"]
+                ]
+            });
+        });
+    </script>
+}

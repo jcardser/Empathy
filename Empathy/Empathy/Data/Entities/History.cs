@@ -76,10 +76,11 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage ="El campo {0} es obligatorio.")]
         public string Diagnosis { get; set; }
 
-        
-        
         //Debe organizarse el motivo de la consulta//
         //Conexión con procedimientos//
         public ICollection<Procedure> Procedures { get; set; }
+
+        [Display(Name = "Procedimiento")]
+        public int ProceduresNumber => Procedures == null ? 0 : Procedures.Count;
     }
 }

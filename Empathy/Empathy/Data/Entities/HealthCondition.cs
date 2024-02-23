@@ -83,6 +83,6 @@ namespace Empathy.Data.Entities
          */
 
         [JsonIgnore]
-        public Appointment Appointment { get; set; }
+        public Appointment Appointments { get; set; }
     }
 }

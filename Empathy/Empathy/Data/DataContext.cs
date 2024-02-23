@@ -29,7 +29,6 @@ namespace Empathy.Data
             modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
             modelBuilder.Entity<State>().HasIndex("Name", "CountryId").IsUnique();
             modelBuilder.Entity<City>().HasIndex("Name", "StateId").IsUnique();
-            modelBuilder.Entity<Appointment>().HasIndex(a => a.Id).IsUnique();
             modelBuilder.Entity<Campus>().HasIndex(ca => ca.Id).IsUnique();
             modelBuilder.Entity<Appointment>().HasIndex(a => a.Id).IsUnique();
         }

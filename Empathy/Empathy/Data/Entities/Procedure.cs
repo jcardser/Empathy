@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Empathy.Data.Entities
 
@@ -12,6 +13,7 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string TypeProcedure { get; set; }
 
-        public ICollection<History> Histories { get; set; }
+        [JsonIgnore]
+        public History Histories { get; set; }
     }
 }
