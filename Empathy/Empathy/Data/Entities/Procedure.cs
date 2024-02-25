@@ -13,7 +13,9 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string TypeProcedure { get; set; }
 
-        [JsonIgnore]
-        public History Histories { get; set; }
+        public ICollection<HistoryProcedure> HistoryProcedures { get; set; }
+
+        [Display(Name = "Procedimientos")]
+        public int HistoryProceduresNumber => HistoryProcedures == null ? 0 : HistoryProcedures.Count;
     }
 }

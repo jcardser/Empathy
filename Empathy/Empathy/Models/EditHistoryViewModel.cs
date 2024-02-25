@@ -1,42 +1,32 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Empathy.Models
 {
     public class EditHistoryViewModel
     {
+        public int Id { get; set; }
 
         [Column(TypeName = "datetime")]
         [Display(Name = "Fecha atención")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public DateTime Date { get; set; }
+
         [Display(Name = "Motivo de la consulta")]
         [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} carácteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Summary { get; set; }
-
-        //Pendiente de incluir a la vista
 
         [Display(Name = "Sintomas y duración")]
         [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} carácteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Symptoms { get; set; }
 
-        //Pendiente de incluir a la vista
-
         [Display(Name = "Hallazgos medicos")]
         [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} carácteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Notes { get; set; }
 
-
-
-        /* Objetos examen físico:
-         * 1. Presión arterial.
-         * 2. Frecuencia cardiaca.
-         * 3. Frecuencia respiratoria.
-         * 4. Temperatura.
-         */
         [Display(Name = "Presión arterial")]
         [MaxLength(500, ErrorMessage = "El campo {0} debe contener máximo {1} carácteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -58,15 +48,9 @@ namespace Empathy.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Temperature { get; set; }
 
-
-        //Pendiente de incluir a la vista
-
         [Display(Name = "Resultado examenes fisicos")]
         [MaxLength(500, ErrorMessage = "El campo {0} debe contener máximo {1} carácteres.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string PhysicalExam { get; set; }
-
-        //Pendiente de incluir a la vista
 
         [Display(Name = "Diagnostico")]
         [MaxLength(500, ErrorMessage = "El campo {0} debe contener máximo {1} carácteres.")]

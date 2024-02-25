@@ -66,7 +66,6 @@ namespace Empathy.Data.Entities
 
         [Display(Name = "Resultado examenes fisicos")]
         [MaxLength(500, ErrorMessage = "El campo {0} debe contener máximo {1} carácteres.")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string PhysicalExam { get; set; }
 
         //Pendiente de incluir a la vista
@@ -78,9 +77,9 @@ namespace Empathy.Data.Entities
 
         //Debe organizarse el motivo de la consulta//
         //Conexión con procedimientos//
-        public ICollection<Procedure> Procedures { get; set; }
+        public ICollection<HistoryProcedure> HistoryProcedures { get; set; }
 
-        [Display(Name = "Procedimiento")]
-        public int ProceduresNumber => Procedures == null ? 0 : Procedures.Count;
+        [Display(Name = "Procedimientos")]
+        public int HistoryProceduresNumber => HistoryProcedures == null ? 0 : HistoryProcedures.Count;
     }
 }

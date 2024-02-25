@@ -8,9 +8,9 @@ namespace Empathy.Data.Entities
         public int Id { get; set; }
 
         [Display(Name = "Fecha Cita Medica")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-        public DateTime Date { get; set; }
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy HH:mm}", NullDisplayText = "")]
+        public DateTimeOffset DateTime { get; set; }
 
         //--ToDo Organizar...
 

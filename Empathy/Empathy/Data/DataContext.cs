@@ -16,11 +16,11 @@ namespace Empathy.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<Campus> Campuses { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
-
         public DbSet<Procedure> Procedures { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<History> Histories { get; set; }
         public DbSet<HealthCondition> HealthConditions { get; set; }
+        public DbSet<HistoryProcedure> HistoryProcedures { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

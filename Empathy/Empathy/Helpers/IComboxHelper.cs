@@ -12,10 +12,11 @@ namespace Empathy.Helpers
         Task<IEnumerable<SelectListItem>> GetComboStatesAsync(int countryId);
 
         Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId);
+        Task<IEnumerable<SelectListItem>> GetComboProceduresAsync();
 
-        //Task<IEnumerable<SelectListItem>> GetComboCampusAsync();
+        Task<IEnumerable<SelectListItem>> GetComboCampusAsync();
 
-        //Task<IEnumerable<SelectListItem>> GetComboProfessional();
+        Task<IEnumerable<SelectListItem>> GetComboDoctorAsync();
 
 
     }

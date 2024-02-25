@@ -20,6 +20,7 @@ namespace Empathy.Data
             //Crea  la BD y aplica las migraciones
             await _context.Database.EnsureCreatedAsync();
             await CheckCountriesAsync();
+            await CheckSedesAsync();
             await CheckRolesAsync();
             await CheckProceduresAsync();
             await CheckUserAsync("1067950681", "Juan Sebastian", "Cardona Serna", "jcardser@yopmail.com", "304 414 3038", "Villa hermosa", UserType.Admin);
@@ -136,9 +137,102 @@ namespace Empathy.Data
         }
 
 
+        private async Task CheckSedesAsync()
+        {
+            if (!_context.Campuses.Any())
+            {
+                _context.Campuses.Add(new Campus
+                {
+                    NameCam = "Empathy Sur",
+                    AddressCam = "Cra 36 Sur # 20-20",
+                    PhoneCam = "3044143038",
+                    Doctors = new List<Doctor>()
+                    {
+                        new Doctor()
+                        {
+                            NameDoctor = "Laura Lopera",
+                            SpecialtyDoc = "General",
+                        },
+                        new Doctor()
+                        {
+                            NameDoctor = "Hernan Cardona",
+                            SpecialtyDoc = "Psicología",
+                        },
+                        new Doctor()
+                        {
+                            NameDoctor = "Hernan Cardona",
+                            SpecialtyDoc = "Cardiología",
+                        },
+                        new Doctor()
+                        {
+                            NameDoctor = "Mariana Pulgar",
+                            SpecialtyDoc = "Odontología",
+                        },
+                    }
+                });
+                _context.Campuses.Add(new Campus
+                {
+                    NameCam = "Empathy Norte",
+                    AddressCam = "Diagonal 55 #105-33",
+                    PhoneCam = "604-6045050",
+                    Doctors = new List<Doctor>()
+                    {
+                        new Doctor()
+                        {
+                            NameDoctor = "Manuela Alejandra Londoño",
+                            SpecialtyDoc = "General",
+                        },
+                        new Doctor()
+                        {
+                            NameDoctor = "Juan Sebastian Betancurt",
+                            SpecialtyDoc = "Psicología",
+                        },
+                        new Doctor()
+                        {
+                            NameDoctor = "Alan Garcia",
+                            SpecialtyDoc = "Cardiología",
+                        },
+                        new Doctor()
+                        {
+                            NameDoctor = "Maria Dahiana Bohorquez",
+                            SpecialtyDoc = "Odontología",
+                        },
+                    }
+                });
 
+                _context.Campuses.Add(new Campus
+                {
+                    NameCam = "Empathy Occidente",
+                    AddressCam = "Transversal 165 Avenida 33 Frente al cai",
+                    PhoneCam = "604-60452020",
+                    Doctors = new List<Doctor>()
+                    {
+                        new Doctor()
+                        {
+                            NameDoctor = "Maria Teresa Serna Ramirez",
+                            SpecialtyDoc = "General",
+                        },
+                        new Doctor()
+                        {
+                            NameDoctor = "Andres Felipe Madrigal",
+                            SpecialtyDoc = "Psicología",
+                        },
+                        new Doctor()
+                        {
+                            NameDoctor = "Manuel Miranda",
+                            SpecialtyDoc = "Cardiología",
+                        },
+                        new Doctor()
+                        {
+                            NameDoctor = "Mauricio Montenegro",
+                            SpecialtyDoc = "Odontología",
+                        },
+                    }
+                });
+            }
 
-
+            await _context.SaveChangesAsync();
+        }
         private async Task CheckProceduresAsync()
         {
             if (!_context.Procedures.Any())
