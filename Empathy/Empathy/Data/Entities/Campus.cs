@@ -21,9 +21,17 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string PhoneCam { get; set; }
 
+        /*
+         * Conexión con doctor
+         */
         public ICollection<Doctor> Doctors { get; set; }
 
         [Display(Name = "Médico")]
         public int DoctorsNumber => Doctors == null ? 0 : Doctors.Count;
+
+        /*
+         * Conexión con Citas médicas
+         */
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }

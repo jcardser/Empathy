@@ -19,13 +19,21 @@ namespace Empathy.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Reason { get; set; }
 
-        /*Conexión con las otras entidades, Foreing Key
+        /*
+         * Conexión con las otras entidades, Foreing Key
          */
 
         public ICollection<HealthCondition> HealthConditions { get; set; }
 
         [Display(Name = "Condiciones")]
         public int HealsthConditionsNumber => HealthConditions == null ? 0 : HealthConditions.Count;
+
+        /*
+         * Conexión con SEDE
+         */
+
+        [Display(Name = "Doctor")]
+        public Doctor Doctor { get; set; }
 
     }
 }

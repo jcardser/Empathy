@@ -17,7 +17,7 @@ namespace Empathy.Helpers
 
         public async Task<IEnumerable<SelectListItem>> GetComboCampusAsync()
         {
-            _logger.LogInformation("Obteniendo lista de sedes...");
+
             List<SelectListItem> list = await _context.Campuses.Select(s => new SelectListItem
             {
                 Text = s.NameCam,
@@ -25,11 +25,21 @@ namespace Empathy.Helpers
             })
             .OrderBy(s => s.Text)
             .ToListAsync();
-            _logger.LogInformation($"Se encontraron {list.Count} sedes.");
-            list.Insert(0, new SelectListItem { Text = "[Seleccione una sede...", Value = "0" });
+            list.Insert(0, new SelectListItem { Text = "Seleccione una sede...", Value = "0" });
             return list;
         }
 
+        public async Task<IEnumerable<SelectListItem>> GetComboDoctorAsync()
+        {
+            List<SelectListItem> List = await _context.Doctors.Select(p => new SelectListItem
+            {
+                Text = p.NameDoctor + "-" + p.SpecialtyDoc,
+                Value = p.Id.ToString(),
+            }).OrderBy(p => p.Text)
+            .ToListAsync();
+            List.Insert(0, new SelectListItem { Text = "Seleccione un professional ...", Value = "0" });
+            return List;
+        }
 
         public async Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId)
         {
@@ -59,7 +69,6 @@ namespace Empathy.Helpers
             list.Insert(0, new SelectListItem { Text = "[Seleccione un país...", Value = "0" });
             return list;
         }
-
         public async Task<IEnumerable<SelectListItem>> GetComboProceduresAsync()
         {
             List<SelectListItem> List = await _context.Procedures.Select(p => new SelectListItem
@@ -71,19 +80,6 @@ namespace Empathy.Helpers
             List.Insert(0, new SelectListItem { Text = "Seleccione un procedimiento ...", Value = "0" });
             return List;
         }
-
-        public async Task<IEnumerable<SelectListItem>> GetComboDoctorAsync()
-        {
-            List<SelectListItem> List = await _context.Doctors.Select(p => new SelectListItem
-            {
-                Text = p.NameDoctor +"-"+ p.SpecialtyDoc,
-                Value = p.Id.ToString(),
-            }).OrderBy( p => p.Text)
-            .ToListAsync();
-            List.Insert(0, new SelectListItem { Text = "[Seleccione un professional ...", Value = "0" });
-            return List;
-        }
-
         public async Task<IEnumerable<SelectListItem>> GetComboStatesAsync(int countryId)
         {
             List<SelectListItem> list = await _context.States

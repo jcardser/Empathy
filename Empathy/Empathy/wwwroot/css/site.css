@@ -18,5 +18,58 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
 }
+/*
+    Contenedores
+*/
+
+
+.contenedor {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.enlace {
+    flex: 0 0 calc(33.33% - 20px);
+    padding: 20px;
+    background-color: rgba(44, 62, 80);
+    color: rgba(218, 247, 166);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+    .enlace::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #ff00cc, #3333ff);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+    }
+
+    .enlace:hover::before {
+        opacity: 1;
+
+    }
+
+    .enlace h2 {
+        margin: 0;
+        font-size: 24px;
+    }
+

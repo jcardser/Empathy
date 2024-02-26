@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using Empathy.Data.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace Empathy.Models
 {
     public class EditAppointmentViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Display(Name = "Fecha Cita Medica")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-        public DateTime Date { get; set; }
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy HH:mm}", NullDisplayText = "")]
+        public DateTimeOffset DateTime { get; set; }
 
         //--ToDo Organizar...
 
@@ -21,7 +20,25 @@ namespace Empathy.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Reason { get; set; }
 
-        // Agrega esta propiedad para mostrar las opciones de profesionales en la vista
-        public IEnumerable<SelectListItem> ProfessionalOptions { get; set; }
+        //Sede -> Doctor
+
+        [Display(Name = "Sede")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar una Sede / Campus.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int CampusId { get; set; }
+
+        public IEnumerable<SelectListItem> Campus { get; set; }
+
+        [Display(Name = "Médico")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un Médico / Profesional.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int DoctrId { get; set; }
+
+        public IEnumerable<SelectListItem> Doctors { get; set; }
+
+        [Display(Name = "Condiciones de Salud")]
+        public IEnumerable<SelectListItem> HealthConditions { get; set; }
+
+
     }
 }

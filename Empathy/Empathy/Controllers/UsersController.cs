@@ -61,6 +61,7 @@ namespace Empathy.Controllers
                 {
                     imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
                 }
+
                 model.ImageId = imageId;
                 User user = await _userHelper.AddUserAsync(model);
                 if (user == null)

@@ -8,16 +8,20 @@ using Microsoft.EntityFrameworkCore;
 using Empathy.Data;
 using Empathy.Data.Entities;
 using Empathy.Models;
+using Empathy.Enums;
+using Empathy.Helpers;
 
 namespace Empathy.Controllers
 {
     public class AppointmentsController : Controller
     {
         private readonly DataContext _context;
+        private readonly IComboxHelper _comboxHelper;
 
-        public AppointmentsController(DataContext context)
+        public AppointmentsController(DataContext context, IComboxHelper comboxHelper)
         {
             _context = context;
+            _comboxHelper = comboxHelper;
         }
 
         // GET: Appointments
@@ -25,6 +29,8 @@ namespace Empathy.Controllers
         {
               return View(await _context.Appointments
                   .Include(a => a.HealthConditions)
+                  .Include(c => c.Doctor)
+                  .ThenInclude(d => d.Campus)
                   .ToListAsync());
         }
 
@@ -67,17 +73,20 @@ namespace Empathy.Controllers
         // GET: Appointments/Create
         public async Task<IActionResult> Create()
         {
+
             Appointment appointment = new()
             {
-                HealthConditions = new List<HealthCondition>()
+                HealthConditions = new List<HealthCondition>(),
+
             };
+
             return View(appointment);
         }
 
         // POST: Appointments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Appointment appointment)
+        public async Task<IActionResult> Create(Appointment appointment, AddAppointmentViewModel addAppointmentViewModel)
         {
             if (ModelState.IsValid)
             {

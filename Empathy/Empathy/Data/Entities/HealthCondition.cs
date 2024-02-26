@@ -7,6 +7,26 @@ namespace Empathy.Data.Entities
     {
         public int Id { get; set; }
 
+        [Display(Name = "Confirma tu cédula / identificación")]
+        [MaxLength(20, ErrorMessage = "El campo {0} debe tener máximo {1} carácteres")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public int Identification { get; set; }
+
+        [Display(Name = "Confirma tu nombre")]
+        [MaxLength(30, ErrorMessage = "El campo {0} debe tener máximo {1} carácteres")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public string NameUser { get; set; }
+
+        [Display(Name = "Contacto de Emergencia")]
+        [MaxLength(30, ErrorMessage = "El campo {0} debe tener máximo {1} carácteres")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public string Emergengy { get; set; }
+
+        [Display(Name = "Teléfono Emergencia")]
+        [MaxLength(12, ErrorMessage = "El campo {0} debe tener máximo {1} carácteres")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public string PhoneEmergengy { get; set; }
+
         /* Alergias y/o medicamentos
          */
         [Display(Name = "¿Eres alergico a algún medicamento?")]
