@@ -1,4 +1,4 @@
-﻿@model Empathy.Data.Entities.Appointment
+﻿@model Empathy.Models.AddAppointmentViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -21,6 +21,21 @@
                 <label asp-for="Reason" class="control-label"></label>
                 <input asp-for="Reason" class="form-control" />
                 <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CampusId" class="control-label"></label>
+                <select asp-for="CampusId" asp-items="Model.Campuses" class="form-control"></select>
+                <span asp-validation-for="CampusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DoctorId" class="control-label"></label>
+                <select asp-for="DoctorId" asp-items="Model.Doctors" class="form-control"></select>
+                <span asp-validation-for="DoctorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTimerId" class="control-label"></label>
+                <select asp-for="DateTimerId" asp-items="Model.DateTimers" class="form-control"></select>
+                <span asp-validation-for="DateTimerId" class="text-danger"></span>
             </div>
             </br>
             <div class="form-group">

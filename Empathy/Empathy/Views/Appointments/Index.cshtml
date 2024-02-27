@@ -26,8 +26,12 @@
                 @Html.DisplayNameFor(model => model.Reason)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HealsthConditionsNumber)
+                Sede
             </th>
+            <th>
+                Doctor /Hora
+            </th>
+           
             <th></th>
         </tr>
     </thead>
@@ -43,15 +47,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.HealsthConditionsNumber)
                 </td>
-            <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary"> Editar </a> |
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"> Detalle </a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"> Borrar </a>
-                                    td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary"> Editar </a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"> Detalle </a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"> Borrar </a>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AppointmentsCampusesNumbers)
                                 </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AppointmentDoctorsNumbers)
+                                </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary"> Editar Cita </a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"> Condición Salud </a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"> Cancelar Cita </a>
+
                             </tr>
                         }
                     </tbody>

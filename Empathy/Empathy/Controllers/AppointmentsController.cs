@@ -29,8 +29,6 @@ namespace Empathy.Controllers
         {
               return View(await _context.Appointments
                   .Include(a => a.HealthConditions)
-                  .Include(c => c.Doctor)
-                  .ThenInclude(d => d.Campus)
                   .ToListAsync());
         }
 
@@ -73,23 +71,57 @@ namespace Empathy.Controllers
         // GET: Appointments/Create
         public async Task<IActionResult> Create()
         {
+            AddAppointmentViewModel model = new AddAppointmentViewModel()
+            {
+                Campuses = await _comboxHelper.GetComboCampusAsync(),
+                Doctors = await _comboxHelper.GetComboDoctorAsync(),
+                DateTimers = await _comboxHelper.GetComboDateTimerAsync()
+            };
 
-            Appointment appointment = new()
+            /*Appointment appointment = new()
             {
                 HealthConditions = new List<HealthCondition>(),
 
-            };
+            };*/
 
-            return View(appointment);
+            return View(model);
         }
 
         // POST: Appointments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Appointment appointment, AddAppointmentViewModel addAppointmentViewModel)
+        public async Task<IActionResult> Create( AddAppointmentViewModel model)
         {
             if (ModelState.IsValid)
             {
+                Appointment appointment = new()
+                {
+                    DateTime = model.DateTime,
+                    Reason = model.Reason,
+                };
+                appointment.AppointmentCampuses = new List<AppointmentCampus>()
+                {
+                    new AppointmentCampus
+                    {
+                        Campus = await _context.Campuses.FindAsync(model.CampusId)
+                    }
+                };
+                appointment.AppointmentDoctors = new List<AppointmentDoctor>()
+                {
+                     new AppointmentDoctor
+                    {
+                        Doctor = await _context.Doctors.FindAsync(model.DoctorId)
+                    }
+                };
+                appointment.AppointmentDateTimers = new List<AppointmentDateTimer>() 
+                {
+                     new AppointmentDateTimer
+                    {
+                        DateTimer = await _context.DateTimers.FindAsync(model.DateTimerId)
+                    }
+                };
+
+                
                 try
                 {
                     _context.Add(appointment);
@@ -112,7 +144,7 @@ namespace Empathy.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
-            return View(appointment);
+            return View(model);
         }
 
         // GET: Appointments/Edit/5
@@ -390,6 +422,34 @@ namespace Empathy.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
+        public JsonResult GetDoctors(int CampusId)
+        {
+            Campus campus = _context.Campuses
+                .Include(c => c.Doctors)
+                .FirstOrDefault(c => c.Id == CampusId);
+            if (campus == null)
+            {
+                return null;
+            }
+
+            return Json(campus.Doctors.OrderBy(d => d.NameDoctor));
+        }
+
+        public JsonResult GetDateTimers(int DateTimerId)
+        {
+            Doctor doctor = _context.Doctors
+                .Include(s => s.DateTimers)
+                .FirstOrDefault(s => s.Id == DateTimerId);
+            if (doctor == null)
+            {
+                return null;
+            }
+
+            return Json(doctor.DateTimers.OrderBy(c => c.Date));
+        }
+
 
         private bool AppointmentExists(int id)
         {

@@ -24,13 +24,22 @@ namespace Empathy.Controllers
             _context = context;
         }
 
+        /*
+         * Sección Index
+         */
+
         // GET: Campus
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Campuses
-                  .Include(ca => ca.Doctors)
-                  .ToListAsync());
+            return View(await _context.Campuses
+                .Include(ca => ca.Doctors)
+                .ThenInclude(dt => dt.DateTimers)
+                .ToListAsync());
         }
+
+        /*
+         * Sección Detalles
+         */
 
         // GET: Campus/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -42,6 +51,7 @@ namespace Empathy.Controllers
 
             Campus campus = await _context.Campuses
                 .Include(ca => ca.Doctors)
+                .ThenInclude(dt => dt.DateTimers)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (campus == null)
             {
@@ -51,6 +61,7 @@ namespace Empathy.Controllers
             return View(campus);
         }
 
+        // GET: Campus/DetailsDoctor/5
         [HttpGet]
         public async Task<IActionResult> DetailsDoctor(int? id)
         {
@@ -59,7 +70,10 @@ namespace Empathy.Controllers
                 return NotFound();
             }
 
-            Doctor doctor = await _context.Doctors.FirstOrDefaultAsync(d => d.Id == id);
+            Doctor doctor = await _context.Doctors
+                .Include(s => s.Campus)
+                .Include(s => s.DateTimers)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (doctor == null)
             {
                 return NotFound();
@@ -68,12 +82,37 @@ namespace Empathy.Controllers
             return View(doctor);
         }
 
+        // GET: Campus/DetailsDateTimer/5
+        [HttpGet]
+        public async Task<IActionResult> DetailsDateTimer(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            DateTimer dateTimer = await _context.DateTimers
+                .Include(c => c.Doctor)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (dateTimer == null)
+            {
+                return NotFound();
+            }
+
+            return View(dateTimer);
+        }
+
+        /*
+         * Sección Create 
+         */
+
         // GET: Campus/Create
         public IActionResult Create()
         {
             Campus campus = new()
             {
                 Doctors = new List<Doctor>()
+               
             };
             return View(campus);
         }
@@ -109,6 +148,10 @@ namespace Empathy.Controllers
             }
             return View(campus);
         }
+
+        /*
+         * Sección Agregar - Add
+         */
 
         [HttpGet]
         public async Task<IActionResult> AddDoctor(int? id)
@@ -169,6 +212,69 @@ namespace Empathy.Controllers
 
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> AddDateTimer(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Doctor doctor = await _context.Doctors.FindAsync(id);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+            DateTimerViewModel model = new()
+            {
+                DoctorId = doctor.Id,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddDateTimer(DateTimerViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    DateTimer dateTimer= new()
+                    {
+
+                        Doctor = await _context.Doctors.FindAsync(model.DoctorId),
+                        Date = model.Date,
+                        MediumTime = model.MediumTime,
+                    };
+                    _context.Add(dateTimer);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(DetailsDoctor), new { Id = model.DoctorId });
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya éxiste está hora registrada");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+            return View(model);
+
+        }
+
+        /*
+         * Sección Editar 
+         */
 
         // GET: Campus/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -285,6 +391,76 @@ namespace Empathy.Controllers
 
         }
 
+        public async Task<IActionResult> EditDateTimer(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            DateTimer dateTimer = await _context.DateTimers.FirstOrDefaultAsync(dt => dt.Id == id);
+            if (dateTimer == null)
+            {
+                return NotFound();
+            }
+
+            DateTimerViewModel model = new()
+            {
+                DoctorId = dateTimer.Id,
+                Id = dateTimer.Id,
+                Date = dateTimer.Date,
+                MediumTime = dateTimer.MediumTime
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditDateTimer(int id, DateTimerViewModel model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    DateTimer dateTimer = new()
+                    {
+                        Id = model.Id,
+                        Date = model.Date,
+                        MediumTime = model.MediumTime,
+                    };
+                    _context.Update(dateTimer);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { Id = model.DoctorId });
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe esta fecha y hora.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+            return View(model);
+
+        }
+
+        /*
+         * Sección Borrar
+         */
+
         // GET: Countries/Delete/5
         public async Task<IActionResult> DeleteDoctor(int? id)
         {
@@ -315,6 +491,37 @@ namespace Empathy.Controllers
             return RedirectToAction(nameof(Details), new { Id = doctor.Campus.Id });
         }
 
+        // GET: Countries/Delete/5
+        public async Task<IActionResult> DeleteDateTimer(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            DateTimer dateTimer = await _context.DateTimers
+                .Include(c => c.Doctor)
+                .FirstOrDefaultAsync(s => s.Id == id);
+            if (dateTimer == null)
+            {
+                return NotFound();
+            }
+
+            return View(dateTimer);
+        }
+
+        // POST: Countries/Delete/5
+        [HttpPost, ActionName("DeleteDateTimer")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteDateTimerConfirmed(int id)
+        {
+            DateTimer dateTimer = await _context.DateTimers
+                .Include(d => d.Doctor)
+                .FirstOrDefaultAsync(d => d.Id == id);
+            _context.DateTimers.Remove(dateTimer);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(DetailsDoctor), new { Id = dateTimer.Doctor.Id });
+        }
 
         // GET: Campus/Delete/5
         public async Task<IActionResult> Delete(int? id)

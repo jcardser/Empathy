@@ -21,7 +21,7 @@ namespace Empathy.Models
         public string Reason { get; set; }
 
         //Sede -> Doctor
-
+        /*
         [Display(Name = "Sede")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar una Sede / Campus.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -33,9 +33,14 @@ namespace Empathy.Models
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un Médico / Profesional.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int DoctrId { get; set; }
-
         public IEnumerable<SelectListItem> Doctors { get; set; }
 
+        [Display(Name = "Disponibilidad")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar una hora.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int DateTimersId { get; set; }
+        public IEnumerable<SelectListItem> DateTimers { get; set; }
+        */
         [Display(Name = "Condiciones de Salud")]
         public IEnumerable<SelectListItem> HealthConditions { get; set; }
 

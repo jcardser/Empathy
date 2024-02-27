@@ -1,0 +1,15 @@
+﻿@model Empathy.Data.Entities.DateTimer
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <partial name="_DateTimerDetails" />
+</div>
+<div>
+    <a asp-action="EditDateTier" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Editar</a> |
+    <a asp-action="DetailsDoctor" asp-route-id="@Model?.Doctor.Id" class="btn btn-outline-success">Regresar</a>
+</div>

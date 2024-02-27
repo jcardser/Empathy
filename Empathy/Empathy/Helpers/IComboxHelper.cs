@@ -15,8 +15,10 @@ namespace Empathy.Helpers
         Task<IEnumerable<SelectListItem>> GetComboProceduresAsync();
 
         Task<IEnumerable<SelectListItem>> GetComboCampusAsync();
-
+        //Pendiente por indice de campus
         Task<IEnumerable<SelectListItem>> GetComboDoctorAsync();
+        Task<IEnumerable<SelectListItem>> GetComboDateTimerAsync();
+        Task<IEnumerable<SelectListItem>> GetComboUserAsync();
 
 
     }

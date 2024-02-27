@@ -19,5 +19,10 @@ namespace Empathy.Data.Entities
 
         [JsonIgnore]
         public Campus Campus { get; set; }
+
+        public ICollection<DateTimer> DateTimers { get; set; }
+
+        [Display(Name = "Médico")]
+        public int DateTimeNumbers => DateTimers == null ? 0 : DateTimers.Count;
     }
 }

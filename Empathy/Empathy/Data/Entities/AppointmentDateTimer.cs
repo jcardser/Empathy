@@ -1,9 +1,10 @@
 ﻿namespace Empathy.Data.Entities
 {
-    public class AppointmentCampus
+    public class AppointmentDateTimer
     {
         public int Id { get; set; }
+
         public Appointment Appointment { get; set; }
-        public Campus Campus { get; set;}
+        public DateTimer DateTimer { get; set; }
     }
 }

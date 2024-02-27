@@ -32,6 +32,6 @@ namespace Empathy.Data.Entities
         /*
          * Conexión con Citas médicas
          */
-        public ICollection<Appointment> Appointments { get; set; }
+        //public ICollection<Appointment> Appointments { get; set; }
     }
 }

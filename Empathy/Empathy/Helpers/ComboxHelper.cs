@@ -1,4 +1,5 @@
 ﻿using Empathy.Data;
+using Empathy.Data.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,13 +34,27 @@ namespace Empathy.Helpers
         {
             List<SelectListItem> List = await _context.Doctors.Select(p => new SelectListItem
             {
-                Text = p.NameDoctor + "-" + p.SpecialtyDoc,
+                Text = p.NameDoctor + " - " + p.SpecialtyDoc + " - " + p.Campus.NameCam,
                 Value = p.Id.ToString(),
-            }).OrderBy(p => p.Text)
+            })
+            .OrderBy(p => p.Text)
             .ToListAsync();
             List.Insert(0, new SelectListItem { Text = "Seleccione un professional ...", Value = "0" });
             return List;
         }
+
+        public async Task<IEnumerable<SelectListItem>> GetComboDateTimerAsync()
+        {
+            List<SelectListItem> List = await _context.DateTimers.Select(p => new SelectListItem
+                {
+                    Text = p.Doctor.NameDoctor + " - " + p.Date + "-" + p.MediumTime,
+                    Value = p.Id.ToString(),
+                }).OrderBy(p => p.Text)
+            .ToListAsync();
+            List.Insert(0, new SelectListItem { Text = "Seleccione una Fecha disponible ...", Value = "0" });
+            return List;
+        }
+
 
         public async Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId)
         {
@@ -69,17 +84,6 @@ namespace Empathy.Helpers
             list.Insert(0, new SelectListItem { Text = "[Seleccione un país...", Value = "0" });
             return list;
         }
-        public async Task<IEnumerable<SelectListItem>> GetComboProceduresAsync()
-        {
-            List<SelectListItem> List = await _context.Procedures.Select(p => new SelectListItem
-            {
-                Text = p.TypeProcedure,
-                Value = p.Id.ToString(),
-            }).OrderBy(p => p.Text)
-           .ToListAsync();
-            List.Insert(0, new SelectListItem { Text = "Seleccione un procedimiento ...", Value = "0" });
-            return List;
-        }
         public async Task<IEnumerable<SelectListItem>> GetComboStatesAsync(int countryId)
         {
             List<SelectListItem> list = await _context.States
@@ -93,6 +97,32 @@ namespace Empathy.Helpers
                 .ToListAsync();
 
             list.Insert(0, new SelectListItem { Text = "[Seleccione un Departamento / Estado...", Value = "0" });
+            return list;
+        }
+
+
+        public async Task<IEnumerable<SelectListItem>> GetComboProceduresAsync()
+        {
+            List<SelectListItem> List = await _context.Procedures.Select(p => new SelectListItem
+            {
+                Text = p.TypeProcedure,
+                Value = p.Id.ToString(),
+            }).OrderBy(p => p.Text)
+           .ToListAsync();
+            List.Insert(0, new SelectListItem { Text = "Seleccione un procedimiento ...", Value = "0" });
+            return List;
+        }
+        public async Task<IEnumerable<SelectListItem>> GetComboUserAsync()
+        {
+            List<SelectListItem> list = await _context.Users.Select(s => new SelectListItem
+            {
+                Text = s.FullName,
+                Value = s.Id.ToString(),
+            })
+
+            .OrderBy(s => s.Text)
+            .ToListAsync();
+            list.Insert(0, new SelectListItem { Text = "Seleccione un paciente...", Value = "0" });
             return list;
         }
 
